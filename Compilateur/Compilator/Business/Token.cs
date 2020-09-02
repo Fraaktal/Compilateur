@@ -11,14 +11,17 @@ namespace Compilateur.Compilator.Business
         public enum TokensType
         {
             Add, 
+            Increment,
             Sub,
+            Decrement,
             Mult,
             Div, 
             Mod, 
             Inferior, 
             Superior, 
             InferiorEq, 
-            SuperiorEq, 
+            SuperiorEq,
+            Affect,
             Equals, 
             Different, 
             And, 
