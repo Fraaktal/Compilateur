@@ -13,8 +13,8 @@ namespace Compilateur.Compilator.Control
             string code = File.ReadAllText(path);
 
             // On effectue l'analyse lexicale
-            LexicalAnalyzer analyzer = new LexicalAnalyzer();
-            var tokens = analyzer.AnalyzeCode(code);
+            LexicalAnalyzer analyzer = new LexicalAnalyzer(code);
+            var tokens = analyzer.AnalyzeCode();
         }
     }
 }

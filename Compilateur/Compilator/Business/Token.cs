@@ -36,6 +36,8 @@ namespace Compilateur.Compilator.Business
             Else, 
             For, 
             While, 
+            OpenAccolade,
+            ClosingAccolade,
             EOF
         }
 
