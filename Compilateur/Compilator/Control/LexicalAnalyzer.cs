@@ -20,7 +20,7 @@ namespace Compilateur.Compilator.Control
 
             int index = 0;
 
-            Regex regex = new Regex("^");
+            Regex regex = new Regex("");
 
             while (index < code.Length)
             {
@@ -33,10 +33,12 @@ namespace Compilateur.Compilator.Control
                             || (index < code.Length -1 && code.ElementAt(index + 1).Equals('+'))
                             )
                         {
+                            index += 2;
                             token.Type = Token.TokensType.Increment;
                         }
                         else
                         {
+                            index += 1;
                             token.Type = Token.TokensType.Add;
                         }
                         break;
@@ -45,71 +47,92 @@ namespace Compilateur.Compilator.Control
                             || (index < code.Length - 1 && code.ElementAt(index + 1).Equals('+'))
                             )
                         {
+                            index += 2;
                             token.Type = Token.TokensType.Decrement;
                         }
                         else
                         {
+                            index += 1;
                             token.Type = Token.TokensType.Sub;
                         }
                         break;
                     case '*':
+                        index += 1;
                         token.Type = Token.TokensType.Mult;
                         break;
                     case '/':
+                        index += 1;
                         token.Type = Token.TokensType.Div;
                         break;
                     case '%':
+                        index += 1;
                         token.Type = Token.TokensType.Mod;
                         break;
                     case '<':
                         if (index < code.Length - 1 && code.ElementAt(index + 1).Equals('='))
                         {
+                            index += 2;
                             token.Type = Token.TokensType.InferiorEq;
                         }
                         else
                         {
+                            index += 1;
                             token.Type = Token.TokensType.Inferior;
                         }
                         break;
                     case '>':
                         if (index < code.Length - 1 && code.ElementAt(index + 1).Equals('='))
                         {
+                            index += 2;
                             token.Type = Token.TokensType.SuperiorEq;
                         }
                         else
                         {
+                            index += 1;
                             token.Type = Token.TokensType.Superior;
                         }
                         break;
                     case '=':
                         if (index < code.Length - 1 && code.ElementAt(index + 1).Equals('='))
                         {
+                            index += 2;
                             token.Type = Token.TokensType.Equals;
                         }
                         else
                         {
+                            index += 1;
                             token.Type = Token.TokensType.Affect;
                         }
                         break;
                     case '!':
                         if (index < code.Length - 1 && code.ElementAt(index + 1).Equals('='))
                         {
+                            index += 2;
                             token.Type = Token.TokensType.Different;
                         }
                         break;
                     case '(':
+                        index += 1;
                         token.Type = Token.TokensType.OpenParenthese;
                         break;
                     case ')':
+                        index += 1;
                         token.Type = Token.TokensType.ClosingParenthese;
                         break;
                     case ';':
+                        index += 1;
                         token.Type = Token.TokensType.SemiColon;
                         break;
                     case 'i':
                         if (index < code.Length - 1 && code.ElementAt(index + 1).Equals('f'))
                         {
+                            index += 2;
                             token.Type = Token.TokensType.If;
+                        }
+                        else
+                        {
+                            //todo
+                            index += 1;
                         }
                         break;
                     case 'f':
@@ -117,8 +140,14 @@ namespace Compilateur.Compilator.Control
                         {
                             if (index < code.Length - 2 && code.ElementAt(index + 2).Equals('r'))
                             {
+                                index += 3;
                                 token.Type = Token.TokensType.For;
                             }
+                        }
+                        else
+                        {
+                            //todo
+                            index += 1;
                         }
                         break;
                     case 'w':
@@ -130,10 +159,16 @@ namespace Compilateur.Compilator.Control
                                 {
                                     if (index < code.Length - 4 && code.ElementAt(index + 4).Equals('e'))
                                     {
+                                        index += 5;
                                         token.Type = Token.TokensType.While;
                                     }
                                 }
                             }
+                        }
+                        else
+                        {
+                            //todo
+                            index += 1;
                         }
                         break;
                     case 'e':
@@ -144,14 +179,22 @@ namespace Compilateur.Compilator.Control
                                 {
                                     if (index < code.Length - 3 && code.ElementAt(index + 3).Equals('e'))
                                     {
+                                        index += 4;
                                         token.Type = Token.TokensType.Else;
                                     }
                                 }
+                            }
+                            else
+                            {
+                                //todo
+                                index += 1;
                             }
                         }
 
                         break;
                     default:
+                        //todo
+                        index += 1;
                         break;
                 }
 
@@ -163,3 +206,5 @@ namespace Compilateur.Compilator.Control
         }
     }
 }
+//Identificateur : nom variable
+//const : valeur :)
