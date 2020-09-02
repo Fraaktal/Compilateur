@@ -28,7 +28,7 @@ namespace Compilateur.Compilator.Business
             ClosingParenthese, 
             SemiColon, 
             Const, 
-            Indent, 
+            Identificator, 
             If, 
             Else, 
             For, 
