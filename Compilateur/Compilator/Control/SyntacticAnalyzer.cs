@@ -22,16 +22,16 @@ namespace Compilateur.Compilator.Control
 
         private Node Atom()
         {
-            if (Tokens.check(Token.TokensType.OpenParenthese))
+            if (Tokens.Check(Token.TokensType.OpenParenthese))
             {
                 Node n = Expression(0);
                 Tokens.Accept(Token.TokensType.ClosingParenthese);
                 return n;
             }
-            else if (Courant().type == token_const)
+            else if (Tokens.Current().Type == Token.TokensType.Const)
             {
                 Node n = new Node(Node.NodeType.Const, Tokens.Current().LineNumber);
-                n.ValeurEntiere = Tokens.Current().IntValue;
+                n.IntValue = Tokens.Current().IntValue;
                 Tokens.Forward();
                 return n;
             }

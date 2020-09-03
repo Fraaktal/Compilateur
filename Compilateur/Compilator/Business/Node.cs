@@ -41,12 +41,21 @@ namespace Compilateur.Compilator.Business
 
         public Node()
         {
-            
+            Children = new List<Node>();
         }
 
-        public Node(NodeType type, int line)
+        public Node(NodeType type, int line) :this()
         {
-
+            Type = type;
+            LineNumber = line;
         }
+
+        public NodeType Type { get; set; }
+
+        public int LineNumber { get; set; }
+
+        public List<Node> Children { get; set; }
+
+        public int IntValue { get; set; }
     }
 }

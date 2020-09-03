@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.XPath;
 
 namespace Compilateur.Compilator.Business
 {
@@ -20,7 +21,6 @@ namespace Compilateur.Compilator.Business
         public Token Current()
         {
             return Tokens.ElementAt(CurrentIndex);
-
         }
 
         public void Forward()
@@ -32,7 +32,7 @@ namespace Compilateur.Compilator.Business
         {
             if(Current().Type != type)
             {
-                //TODO Erreur Fatale
+                throw new Exception($"Erreur : {type} attendu mais {Current().Type} trouvé ligne {Current().LineNumber}");
             }
             Forward();
         }
