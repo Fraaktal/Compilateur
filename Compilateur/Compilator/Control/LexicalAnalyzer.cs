@@ -60,6 +60,10 @@ namespace Compilateur.Compilator.Control
                             token.Type = Token.TokensType.Sub;
                         }
                         break;
+                    case '^':
+                        index += 1;
+                        token.Type = Token.TokensType.Pow;
+                        break;
                     case '*':
                         index += 1;
                         token.Type = Token.TokensType.Mult;

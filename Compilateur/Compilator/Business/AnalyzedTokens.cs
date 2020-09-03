@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Compilateur.Compilator.Business
@@ -18,22 +19,35 @@ namespace Compilateur.Compilator.Business
 
         public Token Current()
         {
+            return Tokens.ElementAt(CurrentIndex);
 
         }
 
         public void Forward()
         {
-
+            CurrentIndex++;
         }
 
         public void Accept(Token.TokensType type)
         {
-
+            if(Current().Type != type)
+            {
+                //TODO Erreur Fatale
+            }
+            Forward();
         }
 
-        public bool check(Token.TokensType type)
+        public bool Check(Token.TokensType type)
         {
-
+            if(Current().Type == type)
+            {
+                Forward();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
