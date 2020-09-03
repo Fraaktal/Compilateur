@@ -22,7 +22,9 @@ namespace Compilateur.Compilator.Control
 
             // On effectue l'analyse lexicale
             LexicalAnalyzer analyzer = new LexicalAnalyzer(code);
-            var tokens = analyzer.AnalyzeCode();
+            var analyzedTokens = analyzer.AnalyzeCode();
+
+            
         }
     }
 }

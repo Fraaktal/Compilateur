@@ -20,7 +20,7 @@ namespace Compilateur.Compilator.Control
 
         //TODO mot commencant par if else,...
         
-        public List<Token> AnalyzeCode()
+        public AnalyzedTokens AnalyzeCode()
         {
             List<Token> tokens = new List<Token>();
 
@@ -235,7 +235,7 @@ namespace Compilateur.Compilator.Control
             }
 
             tokens.Add(new Token(){Type = Token.TokensType.EOF});
-            return tokens;
+            return new AnalyzedTokens(tokens);
         }
 
         private Token HandleIdentificatorOrConst(int index, out int newIndex)
