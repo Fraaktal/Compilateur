@@ -17,6 +17,7 @@ namespace Compilateur.Compilator.Business
             Mult,
             Div, 
             Mod, 
+            Pow,
             Inferior, 
             Superior, 
             InferiorEq, 
