@@ -18,6 +18,8 @@ namespace Compilateur.Compilator.Control
 
         public string Code { get; set; }
 
+        //TODO mot commencant par if else,...
+        
         public List<Token> AnalyzeCode()
         {
             List<Token> tokens = new List<Token>();

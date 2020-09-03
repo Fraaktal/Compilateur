@@ -10,7 +10,15 @@ namespace Compilateur.Compilator.Control
         public void Compile(string path)
         {
             // On lis le fichier
-            string code = File.ReadAllText(path);
+            string code = "";
+            try
+            {
+                code = File.ReadAllText(path);
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Erreur chemin incorrect ou fichier inaccessible : {e.Message}");
+            }
 
             // On effectue l'analyse lexicale
             LexicalAnalyzer analyzer = new LexicalAnalyzer(code);
