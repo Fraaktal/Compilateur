@@ -249,11 +249,11 @@ namespace Compilateur.Compilator.Control
             Token token = new Token();
             if (IsLetter(c))
             {
-                while (IsLetter(c) && index < Code.Length - 1)
+                while (IsLetter(c) && index < Code.Length)
                 {
+                    c = Code.ElementAt(index);
                     val += c;
                     index++;
-                    c = Code.ElementAt(index);
                 }
 
                 token.Type = Token.TokensType.Identificator;
@@ -261,11 +261,11 @@ namespace Compilateur.Compilator.Control
             }
             else if(IsNumber(c))
             {
-                while (IsNumber(c) && index < Code.Length - 1)
+                while (IsNumber(c) && index < Code.Length)
                 {
+                    c = Code.ElementAt(index);
                     val += c;
                     index++;
-                    c = Code.ElementAt(index);
                 }
 
                 token.Type = Token.TokensType.Const;
