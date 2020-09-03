@@ -21,10 +21,13 @@ namespace Compilateur.Compilator.Control
             }
 
             // On effectue l'analyse lexicale
-            LexicalAnalyzer analyzer = new LexicalAnalyzer(code);
-            var analyzedTokens = analyzer.AnalyzeCode();
+            LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(code);
+            var analyzedTokens = lexicalAnalyzer.AnalyzeCode();
 
-            
+            SyntacticAnalyzer syntacticAnalyzer = new SyntacticAnalyzer(analyzedTokens);
+            var tree = syntacticAnalyzer.Analyze();
+
+
         }
     }
 }

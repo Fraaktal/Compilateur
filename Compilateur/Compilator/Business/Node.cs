@@ -57,5 +57,10 @@ namespace Compilateur.Compilator.Business
         public List<Node> Children { get; set; }
 
         public int IntValue { get; set; }
+
+        public void AddChildren(List<Node> nodes)
+        {
+            Children.AddRange(nodes);
+        }
     }
 }

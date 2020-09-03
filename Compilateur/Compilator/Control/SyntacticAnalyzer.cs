@@ -15,9 +15,10 @@ namespace Compilateur.Compilator.Control
 
         public AnalyzedTokens Tokens { get; set; }
 
-        public void Analyze()
+        public Node Analyze()
         {
-
+            Node res = Expression(0);
+            return res;
         }
 
         private Node Atom()
@@ -43,7 +44,19 @@ namespace Compilateur.Compilator.Control
 
         private Node Expression(int minPriority)
         {
+            Node n = Atom();
+            while (OperatorsPriorities.IsLeftPrioritySuperirOrEqualsTo(Tokens.Current().Type,minPriority))
+            {
+                var op = OperatorsPriorities.GetPriority(Tokens.Current().Type);
+                Tokens.Forward();
+                int line = Tokens.Current().LineNumber;
+                Node a = Expression(op.RightPriority);
+                Node tmp = new Node(op.NodeType,line);
+                tmp.AddChildren(new List<Node> {n, a});
+                n = tmp;
+            }
 
+            return n;
         }
     }
 }
