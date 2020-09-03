@@ -40,20 +40,18 @@ namespace Compilateur.Compilator.Business
         public static bool IsLeftPrioritySuperirOrEqualsTo(Token.TokensType type, int priority)
         {
             var op = GetPriority(type);
+            if (op == null)
+            {
+                return false;
+            }
             return op.LeftPriority >= priority;
         }
 
         public static OperatorPriority GetPriority(Token.TokensType type)
         {
             var res = Tab.FirstOrDefault(op => op.TokenType == type);
-            if (res != null)
-            {
-                return res;
-            }
-            else
-            {
-                throw new Exception();
-            }
+            return res;
+
         }
     }
 }

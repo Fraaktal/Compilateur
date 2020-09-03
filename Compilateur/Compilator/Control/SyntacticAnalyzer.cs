@@ -10,7 +10,7 @@ namespace Compilateur.Compilator.Control
     {
         public SyntacticAnalyzer(AnalyzedTokens tokens)
         {
-
+            Tokens = tokens;
         }
 
         public AnalyzedTokens Tokens { get; set; }

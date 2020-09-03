@@ -36,7 +36,8 @@ namespace Compilateur.Compilator.Business
             While,
             OpenAccolade,
             ClosingAccolade,
-            EOF
+            EOF,
+            Pow
         }
 
         public Node()
