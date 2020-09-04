@@ -29,6 +29,7 @@ namespace Compilateur.Compilator.Control
 
             while (index < Code.Length)
             {
+                var test = Code.ElementAt(25);
                 char c = Code.ElementAt(index);
                 Token token = new Token();
                 switch (c)
@@ -144,7 +145,7 @@ namespace Compilateur.Compilator.Control
                         }
                         else
                         {
-                            token = HandleIdentificatorOrConst(index, out index);
+                            token = HandleIdentificatorOrConst(ref index);
                         }
                         break;
                     case 'f':
@@ -158,7 +159,7 @@ namespace Compilateur.Compilator.Control
                         }
                         else
                         {
-                            token = HandleIdentificatorOrConst(index, out index);
+                            token = HandleIdentificatorOrConst(ref index);
                         }
                         break;
                     case 'w':
@@ -178,7 +179,7 @@ namespace Compilateur.Compilator.Control
                         }
                         else
                         {
-                            token = HandleIdentificatorOrConst(index, out index);
+                            token = HandleIdentificatorOrConst(ref index);
                         }
                         break;
                     case 'e':
@@ -196,7 +197,7 @@ namespace Compilateur.Compilator.Control
                             }
                             else
                             {
-                                token = HandleIdentificatorOrConst(index, out index);
+                                token = HandleIdentificatorOrConst(ref index);
                             }
                         }
 
@@ -230,7 +231,7 @@ namespace Compilateur.Compilator.Control
                         break;
                     }
                     default:
-                        token = HandleIdentificatorOrConst(index, out index);
+                        token = HandleIdentificatorOrConst(ref index);
                         break;
                 }
 
@@ -242,39 +243,83 @@ namespace Compilateur.Compilator.Control
             return new AnalyzedTokens(tokens);
         }
 
-        private Token HandleIdentificatorOrConst(int index, out int newIndex)
+
+        public AnalyzedTokens AnalyzeCodeN()
+        {
+            List<Token> tokens = new List<Token>();
+
+            int index = 0;
+            int line = 1;
+
+            while (index < Code.Length)
+            {
+                char c = Code.ElementAt(index);
+                Token token = new Token();
+
+                token.Type = HandleChar(c, ref index);
+
+                tokens.Add(token);
+            }
+
+            return new AnalyzedTokens(tokens);
+        }
+
+        private Token.TokensType HandleChar(in char c, ref int index)
+        {
+            return Token.TokensType.Add;
+        }
+
+        private Token HandleConst(ref int index)
         {
             char c = Code.ElementAt(index);
             string val = "";
             Token token = new Token();
-            if (IsLetter(c))
-            {
-                while (IsLetter(c) && index < Code.Length)
-                {
-                    c = Code.ElementAt(index);
-                    val += c;
-                    index++;
-                }
 
-                token.Type = Token.TokensType.Identificator;
-                token.StringValue = val;
-            }
-            else if(IsNumber(c))
+            while (IsNumber(c) && index < Code.Length - 1)
             {
-                while (IsNumber(c) && index < Code.Length)
-                {
-                    c = Code.ElementAt(index);
-                    val += c;
-                    index++;
-                }
-
-                token.Type = Token.TokensType.Const;
-                int.TryParse(val, out int valI);
-                token.IntValue = valI;
+                val += c;
+                index++;
+                c = Code.ElementAt(index);
             }
 
-            newIndex = index;
+            token.Type = Token.TokensType.Const;
+            int.TryParse(val, out int valI);
+            token.IntValue = valI;
+
             return token;
+        }
+
+        private Token HandleIdentificator(ref int index)
+        {
+            char c = Code.ElementAt(index);
+            string val = "";
+            Token token = new Token();
+
+            while (IsLetter(c) && index < Code.Length - 1)
+            {
+                val += c;
+                index++;
+                c = Code.ElementAt(index);
+            }
+
+            token.Type = Token.TokensType.Identificator;
+            token.StringValue = val;
+
+            return token;
+        }
+
+        private Token HandleIdentificatorOrConst(ref int index)
+        {
+            if (IsNumber(Code.ElementAt(index)))
+            {
+                return HandleConst(ref index);
+            }
+            else if (IsLetter(Code.ElementAt(index)))
+            {
+                return HandleIdentificator(ref index);
+            }
+
+            return null;
         }
 
         private bool IsNumber(in char c)

@@ -47,7 +47,7 @@ namespace Compilateur.Compilator.Business
                 return _res;
             }
         }
-        private enum TokensType
+        public enum TokensType
         {
             Add, 
             Increment,

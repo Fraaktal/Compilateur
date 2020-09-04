@@ -10,10 +10,11 @@ namespace Compilateur.Compilator.Control
         public void Compile(string path)
         {
             // On lis le fichier
+            FileInfo fi = new FileInfo(path);
             string code = "";
             try
             {
-                code = File.ReadAllText(path);
+                code = File.ReadAllText(fi.FullName);
             }
             catch (Exception e)
             {
@@ -26,6 +27,18 @@ namespace Compilateur.Compilator.Control
 
             SyntacticAnalyzer syntacticAnalyzer = new SyntacticAnalyzer(analyzedTokens);
             var tree = syntacticAnalyzer.Analyze();
+
+            CodeGenerator codeGenerator = new CodeGenerator();
+            var generatedCode = codeGenerator.GenerateCode(tree);
+            generatedCode = ".start\n" + generatedCode;
+            generatedCode += "dbg\nhalt\n";
+
+            string resPath = fi.DirectoryName + @"\generatedCode.code";
+            if (File.Exists(resPath))
+            {
+                File.Delete(resPath);
+            }
+            File.WriteAllText(resPath, generatedCode);
         }
     }
 }
