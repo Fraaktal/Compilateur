@@ -8,15 +8,46 @@ namespace Compilateur.Compilator.Business
 {
     public class Token
     {
-        public const string ADD = "+";
-        public const string INCREMENT = "++";
-        public const string SUB = "-";
-        public const string DECREMENT = "--";
-        public const string MULT = "*";
-        public const string MULTIPLICATE = "*=";
-        public const string DIV = "*=";
-        public const string DIVIDE = "*/";
-        public enum TokensType
+        public static Dictionary<string,TokensType> TokenTypeByValue
+        {
+            get 
+            {
+                Dictionary<string, TokensType> _res = new Dictionary<string, TokensType>();
+                _res.Add("+",TokensType.Add);
+                _res.Add("++",TokensType.Increment);
+                _res.Add("-",TokensType.Sub);
+                _res.Add("--",TokensType.Decrement);
+                _res.Add("*",TokensType.Mult);
+                _res.Add("/",TokensType.Div);
+                _res.Add("%",TokensType.Mod);
+                _res.Add("^",TokensType.Pow);
+                _res.Add("<",TokensType.Inferior);
+                _res.Add("<=",TokensType.InferiorEq);
+                _res.Add(">",TokensType.Superior);
+                _res.Add(">=",TokensType.SuperiorEq);
+                _res.Add(">=",TokensType.SuperiorEq);
+                _res.Add("=",TokensType.Affect);
+                _res.Add("==",TokensType.Equals);
+                _res.Add("!=",TokensType.Different);
+                _res.Add("&&",TokensType.And);
+                _res.Add("||",TokensType.Or);
+                _res.Add("!",TokensType.Not);
+                _res.Add("(",TokensType.OpenParenthese);
+                _res.Add(")",TokensType.ClosingParenthese);
+                _res.Add(";",TokensType.SemiColon);
+                _res.Add("",TokensType.Const);
+                _res.Add("",TokensType.Identificator);
+                _res.Add("if",TokensType.If);
+                _res.Add("else",TokensType.Else);
+                _res.Add("for",TokensType.For);
+                _res.Add("while",TokensType.While);
+                _res.Add("{",TokensType.OpenAccolade);
+                _res.Add("}",TokensType.ClosingAccolade);
+                _res.Add("",TokensType.EOF);
+                return _res;
+            }
+        }
+        private enum TokensType
         {
             Add, 
             Increment,
