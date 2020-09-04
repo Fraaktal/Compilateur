@@ -26,8 +26,6 @@ namespace Compilateur.Compilator.Control
 
             SyntacticAnalyzer syntacticAnalyzer = new SyntacticAnalyzer(analyzedTokens);
             var tree = syntacticAnalyzer.Analyze();
-
-
         }
     }
 }

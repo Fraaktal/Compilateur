@@ -8,6 +8,14 @@ namespace Compilateur.Compilator.Business
 {
     public class Token
     {
+        public const string ADD = "+";
+        public const string INCREMENT = "++";
+        public const string SUB = "-";
+        public const string DECREMENT = "--";
+        public const string MULT = "*";
+        public const string MULTIPLICATE = "*=";
+        public const string DIV = "*=";
+        public const string DIVIDE = "*/";
         public enum TokensType
         {
             Add, 
