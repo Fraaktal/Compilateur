@@ -8,6 +8,8 @@ namespace Compilateur.Compilator.Business
 {
     public class Token
     {
+        //TODO objet gros avec symbole node token type priorite et tout et tout pour faire de la detection et génération facile
+        //todo utiliser des flags
         public static Dictionary<string,TokensType> TokenTypeByValue
         {
             get 
@@ -80,7 +82,8 @@ namespace Compilateur.Compilator.Business
             While, 
             OpenAccolade,
             ClosingAccolade,
-            EOF
+            EOF,
+            Debug
         }
 
         public Token()
