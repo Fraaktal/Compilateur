@@ -37,7 +37,11 @@ namespace Compilateur.Compilator.Business
             OpenAccolade,
             ClosingAccolade,
             EOF,
-            Pow
+            Pow,
+            Drop,
+            Test,
+            Block,
+            Debug
         }
 
         public Node()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Compilateur.Compilator.Business;
 
@@ -14,6 +15,7 @@ namespace Compilateur.Compilator.Control
         public string GenerateCode(Node node)
         {
             string generatedCode = "";
+
             foreach (var nodeChild in node.Children)
             {
                 generatedCode += GenerateCode(nodeChild);
@@ -39,6 +41,22 @@ namespace Compilateur.Compilator.Control
                 case Node.NodeType.Const:
                     generatedCode += $"push {node.IntValue}\n";
                     break;
+                case Node.NodeType.Block:
+                    foreach (var nodeChild in node.Children)
+                    {
+                        generatedCode += GenerateCode(nodeChild);
+                    }
+
+                    break;
+                case Node.NodeType.Debug:
+                    generatedCode += GenerateCode(node.Children.First());
+                    generatedCode += "dbg\n";
+                    break;
+                case Node.NodeType.Drop:
+                    generatedCode = GenerateCode(node.Children.First());
+                    generatedCode += "drop\n";
+                    break;
+
             }
 
             return generatedCode;
