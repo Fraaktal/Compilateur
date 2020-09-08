@@ -30,6 +30,10 @@ namespace Compilateur.Compilator.Business
                 res.Add(new OperatorPriority(Token.TokensType.Div,50,51,Node.NodeType.Div));
                 res.Add(new OperatorPriority(Token.TokensType.Mod,50,51,Node.NodeType.Mod));
 
+                res.Add(new OperatorPriority(Token.TokensType.UnSub,55,56,Node.NodeType.UnSub));
+                res.Add(new OperatorPriority(Token.TokensType.UnNot,55,56,Node.NodeType.UnNot));
+
+
                 res.Add(new OperatorPriority(Token.TokensType.Pow,60,61,Node.NodeType.Pow));
 
 

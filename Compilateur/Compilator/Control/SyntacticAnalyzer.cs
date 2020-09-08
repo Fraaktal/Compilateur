@@ -36,6 +36,12 @@ namespace Compilateur.Compilator.Control
                 Tokens.Forward();
                 return n;
             }
+            else if (Tokens.Check(Token.TokensType.Sub))
+            { Node n = new Node(Node.NodeType.UnSub, Tokens.Current().LineNumber);
+                Node arg = Expression(55);
+                n.AddChildren(new List<Node>() { arg });
+                return n;
+            }
             else
             {
                 throw new Exception();
