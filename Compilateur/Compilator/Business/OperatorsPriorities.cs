@@ -12,6 +12,10 @@ namespace Compilateur.Compilator.Business
             get
             {
                 List<OperatorPriority> res = new List<OperatorPriority>();
+
+
+                res.Add(new OperatorPriority(Token.TokensType.Affect, 5, 5, Node.NodeType.Affect));
+
                 res.Add(new OperatorPriority(Token.TokensType.Or, 10, 11, Node.NodeType.Or));
 
                 res.Add(new OperatorPriority(Token.TokensType.And, 20, 21, Node.NodeType.And));
