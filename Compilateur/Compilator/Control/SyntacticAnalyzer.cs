@@ -70,6 +70,7 @@ namespace Compilateur.Compilator.Control
                     line = Tokens.Current().LineNumber;
                     N = new Node(Node.NodeType.Declaration, line);
                     N.Identificator = Tokens.Current().StringValue;
+                    Tokens.Forward();
                     Tokens.Accept(Token.TokensType.SemiColon);
                     return N;
                 }
@@ -113,6 +114,7 @@ namespace Compilateur.Compilator.Control
             {
                 Node n = new Node(Node.NodeType.Ref, Tokens.Current().LineNumber);
                 n.Identificator = Tokens.Current().StringValue;
+                Tokens.Forward();
                 return n;
             }
             else
