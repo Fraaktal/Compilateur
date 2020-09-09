@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Compilateur.Compilator.Business;
 
 namespace Compilateur.Compilator.Control
@@ -11,35 +10,45 @@ namespace Compilateur.Compilator.Control
 
         public SemanticAnalyzer()
         {
-            void DebutBloc()
-            {
-                Pile.Enqueue(new Dictionary<string, Symbol>());
-            }
+            NbSlot = 0;   
+        }
 
-            void FinBloc()
-            {
-                Pile.Dequeue();
-            }
+        private int NbSlot { get; set; }
 
-            Symbol Declarer(String ident)
+        public void Analyze(Node N)
+        {
+            Symbol S;
+            switch (N.Type)
             {
-                if (Pile.Peek().ContainsKey(ident))
-                {
-                    //Erreur
-                }
-                else
-                {
-                    Symbol s = new Symbol(ident);
-                    Pile.Peek().Add(ident, s);
-                    return s;
-                }
+                default:
+                    foreach(var child in N.Children)
+                    {
+                        Analyze(child);
+                    }
+                    break;
+                case Node.NodeType.Block:
+                    DebutBloc();
+                    foreach(var child in N.Children)
+                    {
+                        Analyze(child);
+                    }
+                    FinBlock();
+                    break;
+                case Node.NodeType.Declaration:
+                    S = Declarer(N.Identificator);
+                    S.Type = Symbol.SymbolType.Variable;
+                    S.Slot = NbSlot;
+                    NbSlot++;
+                    break;
+                case Node.NodeType.Ref:
+                    S = Acceder(N.Identificator);
+                    if(S.Type != Symbol.SymbolType.Variable)
+                    {
+                        throw new Exception();
+                    }
+                    N.Slot = S.Slot;
+                    break;
             }
-
-            Symbol Accepter(String ident)
-            {
-                
-            }
-
         }
     }
 }
