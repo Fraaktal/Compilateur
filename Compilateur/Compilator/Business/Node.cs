@@ -43,7 +43,9 @@ namespace Compilateur.Compilator.Business
             Drop,
             Test,
             Block,
-            Debug
+            Debug,
+            Declaration,
+            Ref
         }
 
         public Node()
@@ -64,6 +66,10 @@ namespace Compilateur.Compilator.Business
         public List<Node> Children { get; set; }
 
         public int IntValue { get; set; }
+
+        public string Identificator { get; set; }
+
+        public int  Slot { get; internal set; }
 
         public void AddChildren(List<Node> nodes)
         {

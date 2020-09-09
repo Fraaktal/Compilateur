@@ -63,6 +63,22 @@ namespace Compilateur.Compilator.Control
 
                 return N;
             }
+            else if (Tokens.Check(Token.TokensType.Int))
+            {
+                if(Tokens.Current().Type == Token.TokensType.Identificator)
+                {
+                    line = Tokens.Current().LineNumber;
+                    N = new Node(Node.NodeType.Declaration, line);
+                    N.Identificator = Tokens.Current().StringValue;
+                    Tokens.Accept(Token.TokensType.SemiColon);
+                    return N;
+                }
+                else
+                {
+                    throw new Exception();
+                }
+                
+            }
 
             line = Tokens.Current().LineNumber;
             N = new Node(Node.NodeType.Drop, line);
@@ -93,10 +109,24 @@ namespace Compilateur.Compilator.Control
                 n.AddChildren(new List<Node>() { arg });
                 return n;
             }
+            else if(Tokens.Current().Type == Token.TokensType.Identificator)
+            {
+                Node n = new Node(Node.NodeType.Ref, Tokens.Current().LineNumber);
+                n.Identificator = Tokens.Current().StringValue;
+                return n;
+            }
             else
             {
-                throw new Exception();
+                throw new Exception($"Erreur - Token innatendu ligne . Trouvé : {Tokens.Current().Type}");
             }
+
+            /*
+             * 
+             * Utilisation dans atome 
+                Else if (courant().type == tok_ident)
+                 Return Node(reference ident)
+             * 
+             */
         }
 
         private Node Expression(int minPriority)

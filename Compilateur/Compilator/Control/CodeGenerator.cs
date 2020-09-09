@@ -46,7 +46,6 @@ namespace Compilateur.Compilator.Control
                     {
                         generatedCode += GenerateCode(nodeChild);
                     }
-
                     break;
                 case Node.NodeType.Debug:
                     generatedCode += GenerateCode(node.Children.First());
@@ -55,6 +54,13 @@ namespace Compilateur.Compilator.Control
                 case Node.NodeType.Drop:
                     generatedCode = GenerateCode(node.Children.First());
                     generatedCode += "drop\n";
+                    break;
+                case Node.NodeType.Ref:
+                    generatedCode += $"get {node.Slot}";
+                    break;
+                case Node.NodeType.Affect:
+                    generatedCode = GenerateCode(node.Children[1]);
+                    generatedCode += $"dup\nset {node.Slot}";
                     break;
 
             }
