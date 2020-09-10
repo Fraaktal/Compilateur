@@ -115,6 +115,21 @@ namespace Compilateur.Compilator.Control
                 case Node.NodeType.Inferior:
                     generatedCode += "cmplt\n";
                     break;
+                case Node.NodeType.Equals:
+                    generatedCode += "cmpeq\n";
+                    break;
+                case Node.NodeType.Different:
+                    generatedCode += "cmpne\n";
+                    break;
+                case Node.NodeType.InferiorEq:
+                    generatedCode += "cmple\n";
+                    break;
+                case Node.NodeType.Superior:
+                    generatedCode += "cmpgt\n";
+                    break;
+                case Node.NodeType.SuperiorEq:
+                    generatedCode += "cmpge\n";
+                    break;
 
             }
             //TODO CREER UN UTILS POUR AFFICHER L'ARBRE virer ++ et --
