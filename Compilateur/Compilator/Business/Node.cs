@@ -50,7 +50,8 @@ namespace Compilateur.Compilator.Business
             Block,
             Debug,
             Declaration,
-            Ref
+            Ref,
+            Condition
         }
 
         public Node()
