@@ -100,19 +100,13 @@ namespace Compilateur.Compilator.Control
             }
             else if (Tokens.Check(Token.TokensType.While))
             {
-                if (Tokens.Current().Type == Token.TokensType.While)
-                {
+                    Tokens.Accept(Token.TokensType.OpenParenthese);
                     line = Tokens.Current().LineNumber;
                     N = new Node(Node.NodeType.Loop, line);
-                    //TODO
 
-                    Tokens.Forward();
+                    Tokens.Accept(Token.TokensType.ClosingParenthese);
                     return N;
-                }
-                else
-                {
-                    throw new Exception();
-                }
+
             }
 
             line = Tokens.Current().LineNumber;
