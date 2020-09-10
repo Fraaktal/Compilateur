@@ -32,10 +32,8 @@ namespace Compilateur.Compilator.Control
                 switch (c)
                 {
                     case '+':
-
                         index += 1;
                         token.Type = Token.TokensType.Add;
-
                         break;
                     case '-':
                         if ((index < Code.Length - 1 && Code.ElementAt(index + 1).Equals('='))
@@ -50,7 +48,6 @@ namespace Compilateur.Compilator.Control
                             index += 1;
                             token.Type = Token.TokensType.Sub;
                         }
-
                         break;
                     case '^':
                         index += 1;
@@ -79,7 +76,6 @@ namespace Compilateur.Compilator.Control
                             index += 1;
                             token.Type = Token.TokensType.Inferior;
                         }
-
                         break;
                     case '>':
                         if (index < Code.Length - 1 && Code.ElementAt(index + 1).Equals('='))
@@ -92,7 +88,6 @@ namespace Compilateur.Compilator.Control
                             index += 1;
                             token.Type = Token.TokensType.Superior;
                         }
-
                         break;
                     case '=':
                         if (index < Code.Length - 1 && Code.ElementAt(index + 1).Equals('='))
@@ -105,7 +100,6 @@ namespace Compilateur.Compilator.Control
                             index += 1;
                             token.Type = Token.TokensType.Affect;
                         }
-
                         break;
                     case '!':
                         if (index < Code.Length - 1 && Code.ElementAt(index + 1).Equals('='))
@@ -118,7 +112,6 @@ namespace Compilateur.Compilator.Control
                             index += 1;
                             token.Type = Token.TokensType.Not;
                         }
-
                         break;
                     case '(':
                         index += 1;
@@ -132,103 +125,25 @@ namespace Compilateur.Compilator.Control
                         index += 1;
                         token.Type = Token.TokensType.SemiColon;
                         break;
-                    //case 'i':
-                    //    if (index < Code.Length - 1 && Code.ElementAt(index + 1).Equals('f'))
-                    //    {
-                    //        index += 2;
-                    //        token.Type = Token.TokensType.If;
-                    //    }
-                    //    else
-                    //    {
-                    //        token = HandleIdentificatorOrConst(ref index);
-                    //    }
-
-                    //    break;
-                    //case 'f':
-                    //    if (index < Code.Length - 1 && Code.ElementAt(index + 1).Equals('o'))
-                    //    {
-                    //        if (index < Code.Length - 2 && Code.ElementAt(index + 2).Equals('r'))
-                    //        {
-                    //            index += 3;
-                    //            token.Type = Token.TokensType.For;
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        token = HandleIdentificatorOrConst(ref index);
-                    //    }
-
-                    //    break;
-                    //case 'w':
-                    //    if (index < Code.Length - 1 && Code.ElementAt(index + 1).Equals('h'))
-                    //    {
-                    //        if (index < Code.Length - 2 && Code.ElementAt(index + 2).Equals('i'))
-                    //        {
-                    //            if (index < Code.Length - 3 && Code.ElementAt(index + 3).Equals('l'))
-                    //            {
-                    //                if (index < Code.Length - 4 && Code.ElementAt(index + 4).Equals('e'))
-                    //                {
-                    //                    index += 5;
-                    //                    token.Type = Token.TokensType.While;
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        token = HandleIdentificatorOrConst(ref index);
-                    //    }
-
-                    //    break;
-                    //case 'e':
-
-                    //    if (index < Code.Length - 1 && Code.ElementAt(index + 1).Equals('l'))
-                    //    {
-                    //        if (index < Code.Length - 2 && Code.ElementAt(index + 2).Equals('s'))
-                    //        {
-                    //            if (index < Code.Length - 3 && Code.ElementAt(index + 3).Equals('e'))
-                    //            {
-                    //                index += 4;
-                    //                token.Type = Token.TokensType.Else;
-                    //            }
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        token = HandleIdentificatorOrConst(ref index);
-                    //    }
-
-
-                        //break;
                     case ' ':
-
                         index += 1;
                         continue;
-
                     case '{':
-
                         token.Type = Token.TokensType.OpenAccolade;
                         index += 1;
                         break;
-
                     case '}':
-
                         token.Type = Token.TokensType.ClosingAccolade;
                         index += 1;
                         break;
-
                     case '\r':
-
                         if (index < Code.Length - 1 && Code.ElementAt(index + 1).Equals('\n'))
                         {
                             line++;
                             index += 2;
                             continue;
                         }
-
-                        //n'est pas sensé arriver.
                         break;
-
                     default:
                         token = HandleIdentificatorOrConst(ref index);
                         break;
@@ -340,7 +255,8 @@ namespace Compilateur.Compilator.Control
             {
                 return HandleConst(ref index);
             }
-            else if (IsLetter(Code.ElementAt(index)))
+
+            if (IsLetter(Code.ElementAt(index)))
             {
                 return HandleIdentificator(ref index);
             }
@@ -356,29 +272,6 @@ namespace Compilateur.Compilator.Control
         private bool IsLetter(char c)
         {
             return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z';
-        }
-
-        private string GetWorld(ref int i)
-        {
-            string res = "";
-            while (IsLetter(Code.ElementAt(i)) || IsNumber(Code.ElementAt(i)))
-            {
-                res += Code.ElementAt(i);
-                i++;
-            }
-
-            return res;
-        }
-
-        private string GetWorldUntil(int i, int charCount)
-        {
-            string res = "";
-            for (int j = i; j < charCount && j < Code.Length; j++)
-            {
-                res += Code.ElementAt(i);
-            }
-
-            return res;
         }
     }
 }
