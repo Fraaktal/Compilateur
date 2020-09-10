@@ -66,11 +66,11 @@ namespace Compilateur.Compilator.Control
                     generatedCode += "drop\n";
                     break;
                 case Node.NodeType.Ref:
-                    generatedCode += $"get {node.Slot}";
+                    generatedCode += $"get {node.Slot}\n";
                     break;
                 case Node.NodeType.Affect:
                     generatedCode = GenerateCode(node.Children[1]);
-                    generatedCode += $"dup\nset {node.Slot}";
+                    generatedCode += $"dup\nset {node.Slot}\n";
                     break;
                 case Node.NodeType.UnAdd:
                     generatedCode += GenerateCode(node.Children.First());

@@ -47,7 +47,9 @@ namespace Compilateur.Compilator.Business
             EOF,
             Debug,
             UnSub,
-            UnAdd
+            UnAdd,
+            Break,
+            Continue
         }
 
         public Token()

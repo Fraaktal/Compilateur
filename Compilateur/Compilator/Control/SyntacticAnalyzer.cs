@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Compilateur.Compilator.Business;
 
 namespace Compilateur.Compilator.Control
@@ -83,57 +84,47 @@ namespace Compilateur.Compilator.Control
             {
                 line = Tokens.Current().LineNumber;
                 Tokens.Accept(Token.TokensType.OpenParenthese);
-                N = new Node(Node.NodeType.Block, line);
-
-                line = Tokens.Current().LineNumber;
-                Node loop = new Node(Node.NodeType.Loop, line);
-
-                line = Tokens.Current().LineNumber;
-                Node condition = new Node(Node.NodeType.Condition, line);
-
-                Node decl = Instruction();
+                Node forLoop = new Node(Node.NodeType.For, line);
+                Node declaration = Expression(0);
+                Tokens.Accept(Token.TokensType.SemiColon);
                 Node test = Expression(0);
-                Node increment = Instruction();
-
-                line = Tokens.Current().LineNumber;
-                Node breakNode = new Node(Node.NodeType.Break, line);
-
+                Tokens.Accept(Token.TokensType.SemiColon);
+                Node increment = Expression(0);
                 Tokens.Accept(Token.TokensType.ClosingParenthese);
-
                 Node forContent = Instruction();
-                forContent.AddChildren(new List<Node>(){increment});
 
+                Node B1 = new Node(Node.NodeType.Block, line);
+                Node B2 = new Node(Node.NodeType.Block, line);
+                Node condition = new Node(Node.NodeType.Condition, line);
+                Node breakFor = new Node(Node.NodeType.Break, line);
+                Node drop1 = new Node(Node.NodeType.Drop, line);
+                Node drop2 = new Node(Node.NodeType.Drop, line);
 
-                condition.AddChildren(new List<Node>(){test,forContent,breakNode});
-                loop.AddChildren(new List<Node>(){condition});
-                N.AddChildren(new List<Node>() { decl, loop });
+                drop1.AddChildren(new List<Node>() {declaration});
+                drop2.AddChildren(new List<Node>() {increment});
+                B2.AddChildren(new List<Node>() {forContent, drop2});
+                condition.AddChildren(new List<Node>() {test, B2, breakFor});
+                forLoop.AddChildren(new List<Node>() {condition});
+                B1.AddChildren(new List<Node>() {drop1, forLoop});
 
-                N.AddChildren(new List<Node>() {decl, loop});
-
-
-                N.AddChildren(new List<Node>() {Instruction()});
-
-                return N;
+                return B1;
             }
             else if (Tokens.Check(Token.TokensType.While))
             {
                 line = Tokens.Current().LineNumber;
-                N = new Node(Node.NodeType.Loop, line);
-                Node cond = new Node(Node.NodeType.Condition, line);
-
                 Tokens.Accept(Token.TokensType.OpenParenthese);
-                E1 = Instruction();
-
+                Node whileLoop = new Node(Node.NodeType.While, line);
+                Node test = Expression(0);
                 Tokens.Accept(Token.TokensType.ClosingParenthese);
-                Node I1 = Instruction();
+                Node whileContent = Instruction();
 
-                line = Tokens.Current().LineNumber;
-                Node br = new Node(Node.NodeType.Break, line);
+                Node condition = new Node(Node.NodeType.Condition, line);
+                Node breakWhile = new Node(Node.NodeType.Break, line);
 
-                cond.AddChildren(new List<Node>(){E1,I1,br});
-                N.AddChildren(new List<Node>() { cond });
+                condition.AddChildren(new List<Node>() {test, whileContent, breakWhile});
+                whileLoop.AddChildren(new List<Node>() {condition});
 
-                return N;
+                return whileLoop;
             }
 
             line = Tokens.Current().LineNumber;
