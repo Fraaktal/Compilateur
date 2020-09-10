@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+// ReSharper disable All
 
 namespace Compilateur.Compilator.Business
 {
@@ -42,6 +43,9 @@ namespace Compilateur.Compilator.Business
             EOF,
             Pow,
             Drop,
+            Break,
+            Continue,
+            Loop,
             Test,
             Block,
             Debug,

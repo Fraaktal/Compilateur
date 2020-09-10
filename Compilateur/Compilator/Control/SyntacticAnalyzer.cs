@@ -79,8 +79,40 @@ namespace Compilateur.Compilator.Control
                 }
                 
             }
+            else if (Tokens.Check(Token.TokensType.For))
+            {
+                if (Tokens.Current().Type == Token.TokensType.For)
+                {
+                    line = Tokens.Current().LineNumber;
+                    N = new Node(Node.NodeType.Loop,line);
+                    //TODO
 
-            line = Tokens.Current().LineNumber;
+                    Tokens.Forward();
+                    return N;
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            else if (Tokens.Check(Token.TokensType.While))
+            {
+                if (Tokens.Current().Type == Token.TokensType.While)
+                {
+                    line = Tokens.Current().LineNumber;
+                    N = new Node(Node.NodeType.Loop, line);
+                    //TODO
+
+                    Tokens.Forward();
+                    return N;
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+
+                line = Tokens.Current().LineNumber;
             N = new Node(Node.NodeType.Drop, line);
             E1 = Expression(0);
             Tokens.Accept(Token.TokensType.SemiColon);
