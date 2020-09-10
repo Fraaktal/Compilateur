@@ -239,6 +239,9 @@ namespace Compilateur.Compilator.Control
                 case "int":
                     token.Type = Token.TokensType.Int;
                     break;
+                case "debug":
+                    token.Type = Token.TokensType.Debug;
+                    break;
                 default:
                     token.Type = Token.TokensType.Identificator;
                     token.StringValue = val;

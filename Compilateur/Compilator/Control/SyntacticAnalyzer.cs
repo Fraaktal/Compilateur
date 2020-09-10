@@ -84,7 +84,7 @@ namespace Compilateur.Compilator.Control
             {
                 line = Tokens.Current().LineNumber;
                 Tokens.Accept(Token.TokensType.OpenParenthese);
-                Node forLoop = new Node(Node.NodeType.For, line);
+                Node forLoop = new Node(Node.NodeType.Loop, line);
                 Node declaration = Expression(0);
                 Tokens.Accept(Token.TokensType.SemiColon);
                 Node test = Expression(0);
@@ -113,7 +113,7 @@ namespace Compilateur.Compilator.Control
             {
                 line = Tokens.Current().LineNumber;
                 Tokens.Accept(Token.TokensType.OpenParenthese);
-                Node whileLoop = new Node(Node.NodeType.While, line);
+                Node whileLoop = new Node(Node.NodeType.Loop, line);
                 Node test = Expression(0);
                 Tokens.Accept(Token.TokensType.ClosingParenthese);
                 Node whileContent = Instruction();

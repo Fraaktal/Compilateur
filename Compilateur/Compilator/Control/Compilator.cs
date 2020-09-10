@@ -29,11 +29,11 @@ namespace Compilateur.Compilator.Control
             var tree = syntacticAnalyzer.Analyze();
 
             SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer();
-            semanticAnalyzer.AnalyzeTree(tree);
+            int varCount = semanticAnalyzer.AnalyzeTree(tree);
 
             CodeGenerator codeGenerator = new CodeGenerator();
             var generatedCode = codeGenerator.GenerateCode(tree);
-            generatedCode = ".start\n" + generatedCode;
+            generatedCode = ".start\n" + $"resn {varCount}\n" + generatedCode;
             generatedCode += "halt\n";
 
             string resPath = fi.DirectoryName + @"\generatedCode.code";

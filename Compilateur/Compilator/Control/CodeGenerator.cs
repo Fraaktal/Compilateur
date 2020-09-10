@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using Compilateur.Compilator.Business;
@@ -12,39 +13,54 @@ namespace Compilateur.Compilator.Control
         {
             IfCount = 0;
             LoopCount = 0;
-            LabelsLoop = new Queue<Tuple<string, string>>();
+            LabelsLoop = new List<Tuple<string, string>>();
         }
 
         private int IfCount { get; set; }
 
         private int LoopCount { get; set; }
 
-        private Queue<Tuple<string, string>> LabelsLoop { get; set; }
+        private List<Tuple<string, string>> LabelsLoop { get; set; }
 
         public string GenerateCode(Node node)
         {
             string generatedCode = "";
-
-            foreach (var nodeChild in node.Children)
-            {
-                generatedCode += GenerateCode(nodeChild);
-            }
-
+            
             switch (node.Type)
             {
                 case Node.NodeType.Add:
+                    foreach (var nodeChild in node.Children)
+                    {
+                        generatedCode += GenerateCode(nodeChild);
+                    }
                     generatedCode += "add\n";
                     break;
                 case Node.NodeType.Mult:
+                    foreach (var nodeChild in node.Children)
+                    {
+                        generatedCode += GenerateCode(nodeChild);
+                    }
                     generatedCode += "mul\n";
                     break;
                 case Node.NodeType.Sub:
+                    foreach (var nodeChild in node.Children)
+                    {
+                        generatedCode += GenerateCode(nodeChild);
+                    }
                     generatedCode += "sub\n";
                     break;
                 case Node.NodeType.Div:
+                    foreach (var nodeChild in node.Children)
+                    {
+                        generatedCode += GenerateCode(nodeChild);
+                    }
                     generatedCode += "div\n";
                     break;
                 case Node.NodeType.Mod:
+                    foreach (var nodeChild in node.Children)
+                    {
+                        generatedCode += GenerateCode(nodeChild);
+                    }
                     generatedCode += "mod\n";
                     break;
                 case Node.NodeType.Const:
@@ -55,22 +71,21 @@ namespace Compilateur.Compilator.Control
                     {
                         generatedCode += GenerateCode(nodeChild);
                     }
-
                     break;
                 case Node.NodeType.Debug:
                     generatedCode += GenerateCode(node.Children.First());
                     generatedCode += "dbg\n";
                     break;
                 case Node.NodeType.Drop:
-                    generatedCode = GenerateCode(node.Children.First());
+                    generatedCode += GenerateCode(node.Children.First());
                     generatedCode += "drop\n";
                     break;
                 case Node.NodeType.Ref:
                     generatedCode += $"get {node.Slot}\n";
                     break;
                 case Node.NodeType.Affect:
-                    generatedCode = GenerateCode(node.Children[1]);
-                    generatedCode += $"dup\nset {node.Slot}\n";
+                    generatedCode += GenerateCode(node.Children[1]);
+                    generatedCode += $"dup\nset {node.Children[0].Slot}\n";
                     break;
                 case Node.NodeType.UnAdd:
                     generatedCode += GenerateCode(node.Children.First());
@@ -105,34 +120,69 @@ namespace Compilateur.Compilator.Control
                 case Node.NodeType.Loop:
                     string loop1 = $".Loop{LoopCount}";
                     string loop2 = $".{LoopCount + 1}";
-                    LabelsLoop.Enqueue(new Tuple<string, string>(loop1,loop2));
+                    LabelsLoop.Add(new Tuple<string, string>(loop1,loop2));
                     LoopCount += 2;
                     generatedCode += $"{loop1}\n";
-                    GenerateCode(node.Children.First());
+                    generatedCode += GenerateCode(node.Children.First());
                     generatedCode += $"jump {loop1}\n{loop2}\n";
-                    LabelsLoop.Dequeue();
+                    LabelsLoop.RemoveAt(LabelsLoop.Count-1);
+                    break;
+                case Node.NodeType.Break:
+                    generatedCode += $"jump {LabelsLoop.First().Item2}\n";
+                    break;
+                case Node.NodeType.Continue:
+                    generatedCode += $"jump {LabelsLoop.First().Item1}\n";
                     break;
                 case Node.NodeType.Inferior:
+                    foreach (var nodeChild in node.Children)
+                    {
+                        generatedCode += GenerateCode(nodeChild);
+                    }
                     generatedCode += "cmplt\n";
                     break;
                 case Node.NodeType.Equals:
+                    foreach (var nodeChild in node.Children)
+                    {
+                        generatedCode += GenerateCode(nodeChild);
+                    }
                     generatedCode += "cmpeq\n";
                     break;
                 case Node.NodeType.Different:
+                    foreach (var nodeChild in node.Children)
+                    {
+                        generatedCode += GenerateCode(nodeChild);
+                    }
                     generatedCode += "cmpne\n";
                     break;
                 case Node.NodeType.InferiorEq:
+                    foreach (var nodeChild in node.Children)
+                    {
+                        generatedCode += GenerateCode(nodeChild);
+                    }
                     generatedCode += "cmple\n";
                     break;
                 case Node.NodeType.Superior:
+                    foreach (var nodeChild in node.Children)
+                    {
+                        generatedCode += GenerateCode(nodeChild);
+                    }
                     generatedCode += "cmpgt\n";
                     break;
                 case Node.NodeType.SuperiorEq:
+                    foreach (var nodeChild in node.Children)
+                    {
+                        generatedCode += GenerateCode(nodeChild);
+                    }
                     generatedCode += "cmpge\n";
+                    break;
+                default:
+                    foreach (var nodeChild in node.Children)
+                    {
+                        generatedCode += GenerateCode(nodeChild);
+                    }
                     break;
 
             }
-            //TODO CREER UN UTILS POUR AFFICHER L'ARBRE virer ++ et --
 
             return generatedCode;
         }
