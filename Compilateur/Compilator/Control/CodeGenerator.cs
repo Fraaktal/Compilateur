@@ -11,9 +11,15 @@ namespace Compilateur.Compilator.Control
         public CodeGenerator()
         {
             IfCount = 0;
+            LoopCount = 0;
+            LabelsLoop = new Queue<Tuple<string, string>>();
         }
 
         private int IfCount { get; set; }
+
+        private int LoopCount { get; set; }
+
+        private Queue<Tuple<string, string>> LabelsLoop { get; set; }
 
         public string GenerateCode(Node node)
         {
@@ -49,6 +55,7 @@ namespace Compilateur.Compilator.Control
                     {
                         generatedCode += GenerateCode(nodeChild);
                     }
+
                     break;
                 case Node.NodeType.Debug:
                     generatedCode += GenerateCode(node.Children.First());
@@ -94,11 +101,20 @@ namespace Compilateur.Compilator.Control
                     {
                         generatedCode += $"{endIf}\n";
                     }
+
                     break;
-
-                //TODO CREER UN UTILS POUR AFFICHER L'ARBRE virer ++ et --
-
+                case Node.NodeType.Loop:
+                    string loop1 = $".Loop{LoopCount}";
+                    string loop2 = $".{LoopCount + 1}";
+                    LabelsLoop.Enqueue(new Tuple<string, string>(loop1,loop2));
+                    LoopCount += 2;
+                    generatedCode += $"{loop1}\n";
+                    GenerateCode(node.Children.First());
+                    generatedCode += $"jump {loop1}\n{loop2}\n";
+                    LabelsLoop.Dequeue();
+                    break;
             }
+            //TODO CREER UN UTILS POUR AFFICHER L'ARBRE virer ++ et --
 
             return generatedCode;
         }
