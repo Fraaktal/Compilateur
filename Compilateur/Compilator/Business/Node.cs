@@ -9,6 +9,7 @@ namespace Compilateur.Compilator.Business
         public enum NodeType
         {
             Add,
+            UnAdd,
             Increment,
             Sub,
             UnSub,

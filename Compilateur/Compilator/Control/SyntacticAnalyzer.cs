@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Text;
 using Compilateur.Compilator.Business;
 
 namespace Compilateur.Compilator.Control
@@ -18,6 +16,7 @@ namespace Compilateur.Compilator.Control
         public Node Analyze()
         {
             Node res = Instruction();
+            Tokens.Accept(Token.TokensType.EOF);
             return res;
         }
 
@@ -88,8 +87,23 @@ namespace Compilateur.Compilator.Control
                 return n;
             }
             else if (Tokens.Check(Token.TokensType.Sub))
-            { Node n = new Node(Node.NodeType.UnSub, Tokens.Current().LineNumber);
-                Node arg = Expression(55);
+            { 
+                Node n = new Node(Node.NodeType.UnSub, Tokens.Current().LineNumber);
+                Node arg = Expression(OperatorsPriorities.GetPriority(Token.TokensType.UnSub).RightPriority);
+                n.AddChildren(new List<Node>() { arg });
+                return n;
+            }
+            else if (Tokens.Check(Token.TokensType.Add))
+            {
+                Node n = new Node(Node.NodeType.UnAdd, Tokens.Current().LineNumber);
+                Node arg = Expression(OperatorsPriorities.GetPriority(Token.TokensType.UnAdd).RightPriority);
+                n.AddChildren(new List<Node>() { arg });
+                return n;
+            }
+            else if (Tokens.Check(Token.TokensType.Not))
+            {
+                Node n = new Node(Node.NodeType.UnNot, Tokens.Current().LineNumber);
+                Node arg = Expression(OperatorsPriorities.GetPriority(Token.TokensType.UnNot).RightPriority);
                 n.AddChildren(new List<Node>() { arg });
                 return n;
             }

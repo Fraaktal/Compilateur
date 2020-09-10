@@ -54,7 +54,6 @@ namespace Compilateur.Compilator.Business
             Add, 
             Increment,
             Sub,
-            UnSub,
             Decrement,
             Mult,
             Div, 
@@ -83,7 +82,9 @@ namespace Compilateur.Compilator.Business
             OpenAccolade,
             ClosingAccolade,
             EOF,
-            Debug
+            Debug,
+            UnSub,
+            UnAdd
         }
 
         public Token()

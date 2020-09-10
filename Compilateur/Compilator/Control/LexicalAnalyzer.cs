@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using Compilateur.Compilator.Business;
 
@@ -29,7 +27,6 @@ namespace Compilateur.Compilator.Control
 
             while (index < Code.Length)
             {
-                var test = Code.ElementAt(25);
                 char c = Code.ElementAt(index);
                 Token token = new Token();
                 switch (c)
@@ -330,6 +327,29 @@ namespace Compilateur.Compilator.Control
         private bool IsLetter(char c)
         {
             return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z';
+        }
+
+        private string GetWorld(ref int i)
+        {
+            string res = "";
+            while (IsLetter(Code.ElementAt(i)) || IsNumber(Code.ElementAt(i)))
+            {
+                res += Code.ElementAt(i);
+                i++;
+            }
+
+            return res;
+        }
+
+        private string GetWorldUntil(int i, int charCount)
+        {
+            string res = "";
+            for(int j = i; j<charCount && j<Code.Length;j++)
+            { 
+                res += Code.ElementAt(i);
+            }
+
+            return res;
         }
     }
 }

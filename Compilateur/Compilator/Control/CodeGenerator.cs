@@ -56,7 +56,18 @@ namespace Compilateur.Compilator.Control
                     generatedCode = GenerateCode(node.Children.First());
                     generatedCode += "drop\n";
                     break;
-
+                case Node.NodeType.UnAdd:
+                    generatedCode += GenerateCode(node.Children.First());
+                    break;
+                case Node.NodeType.UnNot:
+                    generatedCode += GenerateCode(node.Children.First());
+                    generatedCode += "neg\n";
+                    break;
+                case Node.NodeType.UnSub:
+                    generatedCode += "push 0\n";
+                    generatedCode += GenerateCode(node.Children.First());
+                    generatedCode += "sub\n";
+                    break;
             }
 
             return generatedCode;
