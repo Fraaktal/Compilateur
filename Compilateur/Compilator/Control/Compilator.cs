@@ -28,10 +28,13 @@ namespace Compilateur.Compilator.Control
             SyntacticAnalyzer syntacticAnalyzer = new SyntacticAnalyzer(analyzedTokens);
             var tree = syntacticAnalyzer.Analyze();
 
+            SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer();
+            semanticAnalyzer.AnalyzeTree(tree);
+
             CodeGenerator codeGenerator = new CodeGenerator();
             var generatedCode = codeGenerator.GenerateCode(tree);
             generatedCode = ".start\n" + generatedCode;
-            generatedCode += "dbg\nhalt\n";
+            generatedCode += "halt\n";
 
             string resPath = fi.DirectoryName + @"\generatedCode.code";
             if (File.Exists(resPath))

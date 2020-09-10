@@ -16,7 +16,13 @@ namespace Compilateur.Compilator.Control
 
         private SymbolTable SymbolTable { get; set; }
 
-        public void Analyze(Node N)
+        public int AnalyzeTree(Node N)
+        {
+            Analyze(N);
+            return NbSlot;
+        }
+
+        private void Analyze(Node N)
         {
             Symbol S;
             switch (N.Type)

@@ -101,7 +101,6 @@ namespace Compilateur.Compilator.Control
                     {
                         generatedCode += $"{endIf}\n";
                     }
-
                     break;
                 case Node.NodeType.Loop:
                     string loop1 = $".Loop{LoopCount}";
@@ -113,6 +112,10 @@ namespace Compilateur.Compilator.Control
                     generatedCode += $"jump {loop1}\n{loop2}\n";
                     LabelsLoop.Dequeue();
                     break;
+                case Node.NodeType.Inferior:
+                    generatedCode += "cmplt\n";
+                    break;
+
             }
             //TODO CREER UN UTILS POUR AFFICHER L'ARBRE virer ++ et --
 

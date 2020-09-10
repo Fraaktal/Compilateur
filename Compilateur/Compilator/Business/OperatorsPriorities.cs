@@ -12,8 +12,7 @@ namespace Compilateur.Compilator.Business
             get
             {
                 List<OperatorPriority> res = new List<OperatorPriority>();
-
-
+                
                 res.Add(new OperatorPriority(Token.TokensType.Affect, 5, 5, Node.NodeType.Affect));
 
                 res.Add(new OperatorPriority(Token.TokensType.Or, 10, 11, Node.NodeType.Or));
@@ -38,7 +37,6 @@ namespace Compilateur.Compilator.Business
                 res.Add(new OperatorPriority(Token.TokensType.UnNot,0,55,Node.NodeType.UnNot));
                 res.Add(new OperatorPriority(Token.TokensType.UnAdd,0,55,Node.NodeType.UnAdd));
 
-
                 res.Add(new OperatorPriority(Token.TokensType.Pow,60,61,Node.NodeType.Pow));
 
 
@@ -60,7 +58,6 @@ namespace Compilateur.Compilator.Business
         {
             var res = Tab.FirstOrDefault(op => op.TokenType == type);
             return res;
-
         }
     }
 }
