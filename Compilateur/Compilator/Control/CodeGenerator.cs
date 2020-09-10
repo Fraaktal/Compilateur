@@ -10,7 +10,10 @@ namespace Compilateur.Compilator.Control
     {
         public CodeGenerator()
         {
+            IfCount = 0;
         }
+
+        private int IfCount { get; set; }
 
         public string GenerateCode(Node node)
         {
@@ -62,6 +65,38 @@ namespace Compilateur.Compilator.Control
                     generatedCode = GenerateCode(node.Children[1]);
                     generatedCode += $"dup\nset {node.Slot}";
                     break;
+                case Node.NodeType.UnAdd:
+                    generatedCode += GenerateCode(node.Children.First());
+                    break;
+                case Node.NodeType.UnNot:
+                    generatedCode += GenerateCode(node.Children.First());
+                    generatedCode += "neg\n";
+                    break;
+                case Node.NodeType.UnSub:
+                    generatedCode += "push 0\n";
+                    generatedCode += GenerateCode(node.Children.First());
+                    generatedCode += "sub\n";
+                    break;
+                case Node.NodeType.Test:
+                    generatedCode += GenerateCode(node.Children.First());
+                    string endIf = $".if{IfCount}";
+                    generatedCode += $"jumpf {endIf}\n";
+                    IfCount++;
+                    generatedCode += GenerateCode(node.Children[1]);
+                    if (node.Children.Count == 3)
+                    {
+                        string endElse = $".if{IfCount}";
+                        generatedCode += $"jump {endElse}\n{endIf}\n";
+                        generatedCode += GenerateCode(node.Children[2]);
+                        generatedCode += $"{endElse}\n";
+                    }
+                    else
+                    {
+                        generatedCode += $"{endIf}\n";
+                    }
+                    break;
+
+                //TODO CREER UN UTILS POUR AFFICHER L'ARBRE virer ++ et --
 
             }
 

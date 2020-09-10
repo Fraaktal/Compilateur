@@ -8,10 +8,13 @@ namespace Compilateur.Compilator.Control
     {
         public SemanticAnalyzer()
         {
+            SymbolTable = new SymbolTable();
             NbSlot = 0;   
         }
 
         private int NbSlot { get; set; }
+
+        private SymbolTable SymbolTable { get; set; }
 
         public void Analyze(Node N)
         {
@@ -25,21 +28,21 @@ namespace Compilateur.Compilator.Control
                     }
                     break;
                 case Node.NodeType.Block:
-                    DebutBloc();
+                    SymbolTable.DebutBloc();
                     foreach(var child in N.Children)
                     {
                         Analyze(child);
                     }
-                    FinBlock();
+                    SymbolTable.FinBloc();
                     break;
                 case Node.NodeType.Declaration:
-                    S = Declarer(N.Identificator);
+                    S = SymbolTable.Declarer(N.Identificator);
                     S.Type = Symbol.SymbolType.Variable;
                     S.Slot = NbSlot;
                     NbSlot++;
                     break;
                 case Node.NodeType.Ref:
-                    S = Acceder(N.Identificator);
+                    S = SymbolTable.Acceder(N.Identificator);
                     if(S.Type != Symbol.SymbolType.Variable)
                     {
                         throw new Exception();

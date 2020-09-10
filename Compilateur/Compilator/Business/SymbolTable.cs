@@ -10,18 +10,20 @@ namespace Compilateur.Compilator.Business
         {
             Pile = new Queue<Dictionary<string, Symbol>>();
         }
+
         public Queue<Dictionary<string, Symbol>> Pile { get; set; }
-        void DebutBloc()
+
+        public void DebutBloc()
         {
             Pile.Enqueue(new Dictionary<string, Symbol>());
         }
 
-        void FinBloc()
+        public void FinBloc()
         {
             Pile.Dequeue();
         }
 
-        Symbol Declarer(string ident)
+        public Symbol Declarer(string ident)
         {
             if (Pile.Peek().ContainsKey(ident))
             {
@@ -34,7 +36,7 @@ namespace Compilateur.Compilator.Business
 
         }
 
-        Symbol Accepter(string ident)
+        public Symbol Acceder(string ident)
         {
             foreach(var h in Pile)
             {
