@@ -16,9 +16,45 @@ namespace Compilateur.Compilator.Control
 
         public Node Analyze()
         {
-            Node res = Instruction();
-            Tokens.Accept(Token.TokensType.EOF);
+            Node res = Fonction();
             return res;
+        }
+
+        private Node Fonction()
+        {
+            Tokens.Accept(Token.TokensType.Int);
+            Token T = Tokens.Current();
+            Tokens.Accept((Token.TokensType.Identificator));
+            Node N = new Node(Node.NodeType.Fonction, Tokens.Current().LineNumber);
+            N.Identificator = T.StringValue;
+
+            while (Tokens.Current().Type != Token.TokensType.ClosingParenthese)
+            {
+                
+                if (Tokens.Check(Token.TokensType.Int))
+                {
+                    if (Tokens.Current().Type == Token.TokensType.Identificator)
+                    {
+                        Node a = new Node(Node.NodeType.Declaration, Tokens.Current().LineNumber);
+                        a.Identificator = Tokens.Current().StringValue;
+                        N.AddChild(a);
+                    }
+                }
+
+                Tokens.Forward();
+
+                if (Tokens.Current().Type != Token.TokensType.Virgule)
+                {
+                    break;
+                }
+            }
+
+            Tokens.Accept(Token.TokensType.ClosingParenthese);
+
+            N.AddChild(Instruction());
+
+            return N;
+
         }
 
         private Node Instruction()
@@ -32,7 +68,7 @@ namespace Compilateur.Compilator.Control
                 E1 = Expression(0);
                 Tokens.Accept(Token.TokensType.SemiColon);
                 N = new Node(Node.NodeType.Debug, line);
-                N.AddChildren(new List<Node>() {E1});
+                N.AddChild(E1);
                 return N;
             }
             else if (Tokens.Check(Token.TokensType.OpenAccolade))
@@ -41,7 +77,7 @@ namespace Compilateur.Compilator.Control
                 N = new Node(Node.NodeType.Block, line);
                 while (!Tokens.Check(Token.TokensType.ClosingAccolade))
                 {
-                    N.AddChildren(new List<Node>() {Instruction()});
+                    N.AddChild(Instruction());
                 }
 
                 return N;
@@ -58,7 +94,7 @@ namespace Compilateur.Compilator.Control
                 if (Tokens.Check(Token.TokensType.Else))
                 {
                     Node I2 = Instruction();
-                    N.AddChildren(new List<Node>() {I2});
+                    N.AddChild(I2);
                 }
 
                 return N;
@@ -95,16 +131,16 @@ namespace Compilateur.Compilator.Control
 
                 Node B1 = new Node(Node.NodeType.Block, line);
                 Node B2 = new Node(Node.NodeType.Block, line);
-                Node condition = new Node(Node.NodeType.Condition, line);
+                Node condition = new Node(Node.NodeType.Test, line);
                 Node breakFor = new Node(Node.NodeType.Break, line);
                 Node drop1 = new Node(Node.NodeType.Drop, line);
                 Node drop2 = new Node(Node.NodeType.Drop, line);
 
-                drop1.AddChildren(new List<Node>() {declaration});
-                drop2.AddChildren(new List<Node>() {increment});
+                drop1.AddChild(declaration);
+                drop2.AddChild(increment);
                 B2.AddChildren(new List<Node>() {forContent, drop2});
                 condition.AddChildren(new List<Node>() {test, B2, breakFor});
-                forLoop.AddChildren(new List<Node>() {condition});
+                forLoop.AddChild(condition);
                 B1.AddChildren(new List<Node>() {drop1, forLoop});
 
                 return B1;
@@ -118,11 +154,11 @@ namespace Compilateur.Compilator.Control
                 Tokens.Accept(Token.TokensType.ClosingParenthese);
                 Node whileContent = Instruction();
 
-                Node condition = new Node(Node.NodeType.Condition, line);
+                Node condition = new Node(Node.NodeType.Test, line);
                 Node breakWhile = new Node(Node.NodeType.Break, line);
 
                 condition.AddChildren(new List<Node>() {test, whileContent, breakWhile});
-                whileLoop.AddChildren(new List<Node>() {condition});
+                whileLoop.AddChild(condition);
 
                 return whileLoop;
             }
@@ -131,7 +167,7 @@ namespace Compilateur.Compilator.Control
             N = new Node(Node.NodeType.Drop, line);
             E1 = Expression(0);
             Tokens.Accept(Token.TokensType.SemiColon);
-            N.AddChildren(new List<Node>() {E1});
+            N.AddChild(E1);
             return N;
         }
 
@@ -154,33 +190,53 @@ namespace Compilateur.Compilator.Control
             {
                 Node n = new Node(Node.NodeType.UnSub, Tokens.Current().LineNumber);
                 Node arg = Expression(OperatorsPriorities.GetPriority(Token.TokensType.UnSub).RightPriority);
-                n.AddChildren(new List<Node>() {arg});
+                n.AddChild(arg);
                 return n;
             }
             else if (Tokens.Check(Token.TokensType.Add))
             {
                 Node n = new Node(Node.NodeType.UnAdd, Tokens.Current().LineNumber);
                 Node arg = Expression(OperatorsPriorities.GetPriority(Token.TokensType.UnAdd).RightPriority);
-                n.AddChildren(new List<Node>() {arg});
+                n.AddChild(arg);
                 return n;
             }
             else if (Tokens.Check(Token.TokensType.Not))
             {
                 Node n = new Node(Node.NodeType.UnNot, Tokens.Current().LineNumber);
                 Node arg = Expression(OperatorsPriorities.GetPriority(Token.TokensType.UnNot).RightPriority);
-                n.AddChildren(new List<Node>() {arg});
+                n.AddChild(arg);
                 return n;
             }
             else if (Tokens.Current().Type == Token.TokensType.Identificator)
             {
-                Node n = new Node(Node.NodeType.Ref, Tokens.Current().LineNumber);
-                n.Identificator = Tokens.Current().StringValue;
+                Token T = Tokens.Current();
                 Tokens.Forward();
-                return n;
+                if (Tokens.Check(Token.TokensType.OpenParenthese))
+                {
+                    Node n = new Node(Node.NodeType.Appel,T.LineNumber);
+                    n.Identificator = T.StringValue;
+                    while (Tokens.Current().Type != Token.TokensType.ClosingParenthese)
+                    {
+                        n.AddChild(Expression(0));
+                        if (Tokens.Check(Token.TokensType.Virgule))
+                        {
+                            break;
+                        }
+                    }
+
+                    Tokens.Accept(Token.TokensType.ClosingParenthese);
+                    return n;
+                }
+                else
+                {
+                    Node n = new Node(Node.NodeType.Ref, T.LineNumber);
+                    n.Identificator = T.StringValue;
+                    return n;
+                }
             }
             else
             {
-                throw new Exception($"Erreur - Token innatendu ligne . Trouvé : {Tokens.Current().Type}");
+                throw new Exception($"Erreur - Token inattendu Trouvé : {Tokens.Current().Type}");
             }
         }
 

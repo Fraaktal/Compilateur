@@ -49,7 +49,8 @@ namespace Compilateur.Compilator.Business
             Debug,
             Declaration,
             Ref,
-            Condition
+            Appel,
+            Fonction
         }
 
         public Node()
@@ -75,9 +76,16 @@ namespace Compilateur.Compilator.Business
 
         public int  Slot { get; internal set; }
 
+        public int SlotCount { get; set; }
+
         public void AddChildren(List<Node> nodes)
         {
             Children.AddRange(nodes);
+        }
+
+        public void AddChild(Node node)
+        {
+            Children.Add(node);
         }
     }
 }

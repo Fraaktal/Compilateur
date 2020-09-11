@@ -14,12 +14,11 @@ namespace Compilateur.Compilator.Control
 
         private int NbSlot { get; set; }
 
-        private SymbolTable SymbolTable { get; set; }
+        public SymbolTable SymbolTable { get; set; }
 
-        public int AnalyzeTree(Node N)
+        public void AnalyzeTree(Node N)
         {
             Analyze(N);
-            return NbSlot;
         }
 
         private void Analyze(Node N)
@@ -58,20 +57,20 @@ namespace Compilateur.Compilator.Control
                 case Node.NodeType.Fonction:
                     NbSlot = 0;
                     S = SymbolTable.Declarer(N.Identificator);
-                    S.Type = Fonction;
+                    S.Type = Symbol.SymbolType.Function;
                     SymbolTable.DebutBloc();
                     foreach (var nChild in N.Children)
                     {
                         Analyze(nChild);
                     }
                     SymbolTable.FinBloc();
-                    N.Slot = NbSlot;
+                    N.SlotCount = NbSlot;
                     break;
                 case Node.NodeType.Appel:
                     S = SymbolTable.Acceder(N.Identificator);
-                    if (S.Type != Fonction)
+                    if (S.Type != Symbol.SymbolType.Function)
                     {
-                        //erreur fatale
+                        throw new Exception();
                     }
 
                     foreach (var child in N.Children)

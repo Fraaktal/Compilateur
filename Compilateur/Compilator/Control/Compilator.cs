@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Compilateur.Compilator.Business;
 
 namespace Compilateur.Compilator.Control
 {
@@ -25,15 +26,22 @@ namespace Compilateur.Compilator.Control
             LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(code);
             var analyzedTokens = lexicalAnalyzer.AnalyzeCode();
 
+
             SyntacticAnalyzer syntacticAnalyzer = new SyntacticAnalyzer(analyzedTokens);
-            var tree = syntacticAnalyzer.Analyze();
-
             SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer();
-            int varCount = semanticAnalyzer.AnalyzeTree(tree);
-
             CodeGenerator codeGenerator = new CodeGenerator();
-            var generatedCode = codeGenerator.GenerateCode(tree);
-            generatedCode = ".start\n" + $"resn {varCount}\n" + generatedCode;
+            string generatedCode = "";
+            semanticAnalyzer.SymbolTable.DebutBloc();
+            while (syntacticAnalyzer.Tokens.Current().Type != Token.TokensType.EOF)
+            {
+                var tree = syntacticAnalyzer.Analyze();     
+                semanticAnalyzer.AnalyzeTree(tree);
+                generatedCode += codeGenerator.GenerateCode(tree);
+            }
+            semanticAnalyzer.SymbolTable.FinBloc();
+
+            generatedCode += ".start\n";
+            generatedCode += "prep main\ncall 0\n";
             generatedCode += "halt\n";
 
             string resPath = fi.DirectoryName + @"\generatedCode.code";

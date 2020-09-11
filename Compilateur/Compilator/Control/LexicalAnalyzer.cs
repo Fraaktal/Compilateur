@@ -9,7 +9,7 @@ namespace Compilateur.Compilator.Control
     {
         public LexicalAnalyzer(string code)
         {
-            Regex regex = new Regex(@"\t|(\/\/(\w*\ *)*(?=\r\n))");
+            Regex regex = new Regex(@"\t|(\/\/(.*)(?=\r\n))");
             code = regex.Replace(code, ""); //supprime les commentaires (pas supprimer les espaces !)
             Code = code;
         }
@@ -124,6 +124,10 @@ namespace Compilateur.Compilator.Control
                     case ';':
                         index += 1;
                         token.Type = Token.TokensType.SemiColon;
+                        break;
+                    case ',':
+                        index += 1;
+                        token.Type = Token.TokensType.Virgule;
                         break;
                     case ' ':
                         index += 1;

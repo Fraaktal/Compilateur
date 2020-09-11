@@ -101,30 +101,31 @@ namespace Compilateur.Compilator.Control
                     break;
                 case Node.NodeType.Test:
                     generatedCode += GenerateCode(node.Children.First());
-                    string endIf = $".if{IfCount}";
+                    string endIf = $"if{IfCount}";
                     generatedCode += $"jumpf {endIf}\n";
                     IfCount++;
                     generatedCode += GenerateCode(node.Children[1]);
                     if (node.Children.Count == 3)
                     {
-                        string endElse = $".if{IfCount}";
-                        generatedCode += $"jump {endElse}\n{endIf}\n";
+                        string endElse = $"if{IfCount}";
+                        IfCount++;
+                        generatedCode += $"jump {endElse}\n.{endIf}\n";
                         generatedCode += GenerateCode(node.Children[2]);
-                        generatedCode += $"{endElse}\n";
+                        generatedCode += $".{endElse}\n";
                     }
                     else
                     {
-                        generatedCode += $"{endIf}\n";
+                        generatedCode += $".{endIf}\n";
                     }
                     break;
                 case Node.NodeType.Loop:
-                    string loop1 = $".Loop{LoopCount}";
-                    string loop2 = $".{LoopCount + 1}";
+                    string loop1 = $"Loop{LoopCount}";
+                    string loop2 = $"Loop{LoopCount + 1}";
                     LabelsLoop.Add(new Tuple<string, string>(loop1,loop2));
                     LoopCount += 2;
-                    generatedCode += $"{loop1}\n";
+                    generatedCode += $".{loop1}\n";
                     generatedCode += GenerateCode(node.Children.First());
-                    generatedCode += $"jump {loop1}\n{loop2}\n";
+                    generatedCode += $"jump {loop1}\n.{loop2}\n";
                     LabelsLoop.RemoveAt(LabelsLoop.Count-1);
                     break;
                 case Node.NodeType.Break:
@@ -174,6 +175,21 @@ namespace Compilateur.Compilator.Control
                         generatedCode += GenerateCode(nodeChild);
                     }
                     generatedCode += "cmpge\n";
+                    break;
+                case Node.NodeType.Appel:
+                    generatedCode += $"prep {node.Identificator}\n";
+                    foreach (var nodeChild in node.Children)
+                    {
+                        generatedCode += GenerateCode(nodeChild);
+                    }
+                    generatedCode += $"call {node.Children.Count}\n";
+                    break;
+                case Node.NodeType.Fonction:
+                    generatedCode += $".{node.Identificator}\n";
+                    generatedCode += $"resn {node.SlotCount - (node.Children.Count-1)}\n";
+                    generatedCode += GenerateCode(node.Children.Last());
+                    generatedCode += "push 0;\n ret\n";
+
                     break;
                 default:
                     foreach (var nodeChild in node.Children)

@@ -49,7 +49,8 @@ namespace Compilateur.Compilator.Business
             UnSub,
             UnAdd,
             Break,
-            Continue
+            Continue,
+            Virgule
         }
 
         public Token()
