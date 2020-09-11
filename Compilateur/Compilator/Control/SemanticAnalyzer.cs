@@ -55,6 +55,30 @@ namespace Compilateur.Compilator.Control
                     }
                     N.Slot = S.Slot;
                     break;
+                case Node.NodeType.Fonction:
+                    NbSlot = 0;
+                    S = SymbolTable.Declarer(N.Identificator);
+                    S.Type = Fonction;
+                    SymbolTable.DebutBloc();
+                    foreach (var nChild in N.Children)
+                    {
+                        Analyze(nChild);
+                    }
+                    SymbolTable.FinBloc();
+                    N.Slot = NbSlot;
+                    break;
+                case Node.NodeType.Appel:
+                    S = SymbolTable.Acceder(N.Identificator);
+                    if (S.Type != Fonction)
+                    {
+                        //erreur fatale
+                    }
+
+                    foreach (var child in N.Children)
+                    {
+                        Analyze(child);
+                    }
+                    break;
             }
         }
     }
