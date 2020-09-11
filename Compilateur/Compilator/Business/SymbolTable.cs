@@ -28,7 +28,7 @@ namespace Compilateur.Compilator.Business
         {
             if (Pile.First().ContainsKey(ident))
             {
-                throw new Exception("Erreur une variable du même nom est déja déclaré dans le bloc");
+                throw new Exception("Erreur : une variable du même nom est déja déclaré dans le bloc.");
             }
 
             Symbol s = new Symbol(ident);
@@ -47,7 +47,7 @@ namespace Compilateur.Compilator.Business
                 }
             }
 
-            throw new Exception();
+            throw new Exception($"Erreur : {ident} n'existe pas dans le contexte actuel.");
         }
 
     }

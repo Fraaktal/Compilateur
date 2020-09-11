@@ -27,6 +27,7 @@ namespace Compilateur.Compilator.Control
             Tokens.Accept((Token.TokensType.Identificator));
             Node N = new Node(Node.NodeType.Fonction, Tokens.Current().LineNumber);
             N.Identificator = T.StringValue;
+            Tokens.Accept(Token.TokensType.OpenParenthese);
 
             while (Tokens.Current().Type != Token.TokensType.ClosingParenthese)
             {
