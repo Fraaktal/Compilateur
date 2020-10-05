@@ -20,3 +20,7 @@ int malloc(int n){
 	*0 = *0 +n;
 	return p;
 }
+
+int init(){
+	return 0;
+}
