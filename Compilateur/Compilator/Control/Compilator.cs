@@ -9,6 +9,9 @@ namespace Compilateur.Compilator.Control
 {
     public class Compilator
     {
+        public SemanticAnalyzer SemanticAnalyzer { get; set; }
+        public CodeGenerator CodeGenerator { get; set; }
+
         public void Compile(string path)
         {
             // On lis le fichier
@@ -33,10 +36,10 @@ namespace Compilateur.Compilator.Control
                     runtime = reader.ReadToEnd();
                 }
             }
-            
+            SemanticAnalyzer = new SemanticAnalyzer();
+            CodeGenerator = new CodeGenerator();
 
-            string generatedCode = GenerateCode(runtime);
-            generatedCode += GenerateCode(code);
+            string generatedCode = GenerateCode(code, runtime);
 
             generatedCode += ".start\n";
             generatedCode += "prep init\ncall 0\n";
@@ -51,25 +54,22 @@ namespace Compilateur.Compilator.Control
             File.WriteAllText(resPath, generatedCode);
         }
 
-        private string GenerateCode(string code)
+        private string GenerateCode(string runtime, string code)
         {
             // On effectue l'analyse lexicale
             LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(code);
             var analyzedTokens = lexicalAnalyzer.AnalyzeCode();
-
-
             SyntacticAnalyzer syntacticAnalyzer = new SyntacticAnalyzer(analyzedTokens);
-            SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer();
-            CodeGenerator codeGenerator = new CodeGenerator();
+            
             string generatedCode = "";
-            semanticAnalyzer.SymbolTable.DebutBloc();
+            SemanticAnalyzer.SymbolTable.DebutBloc();
             while (syntacticAnalyzer.Tokens.Current().Type != Token.TokensType.EOF)
             {
                 var tree = syntacticAnalyzer.Analyze();
-                semanticAnalyzer.AnalyzeTree(tree);
-                generatedCode += codeGenerator.GenerateCode(tree);
+                SemanticAnalyzer.AnalyzeTree(tree);
+                generatedCode += CodeGenerator.GenerateCode(tree);
             }
-            semanticAnalyzer.SymbolTable.FinBloc();
+            SemanticAnalyzer.SymbolTable.FinBloc();
 
             return generatedCode;
         }
