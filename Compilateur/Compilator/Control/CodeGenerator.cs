@@ -191,13 +191,18 @@ namespace Compilateur.Compilator.Control
                     generatedCode += "push 0;\n ret\n";
 
                     break;
+                case Node.NodeType.Pow:
+                    generatedCode += "prep puissance\n";
+                    generatedCode += GenerateCode(node.Children.First());
+                    generatedCode += GenerateCode(node.Children.Last());
+                    generatedCode += "call 2\n";
+                    break;
                 default:
                     foreach (var nodeChild in node.Children)
                     {
                         generatedCode += GenerateCode(nodeChild);
                     }
                     break;
-
             }
 
             return generatedCode;

@@ -208,6 +208,13 @@ namespace Compilateur.Compilator.Control
                 n.AddChild(arg);
                 return n;
             }
+            else if (Tokens.Check(Token.TokensType.Mult))
+            {
+                Node n = new Node(Node.NodeType.Indirection, Tokens.Current().LineNumber);
+                Node arg = Expression(OperatorsPriorities.GetPriority(Token.TokensType.Indirection).RightPriority);
+                n.AddChild(arg);
+                return n;
+            }
             else if (Tokens.Current().Type == Token.TokensType.Identificator)
             {
                 Token T = Tokens.Current();

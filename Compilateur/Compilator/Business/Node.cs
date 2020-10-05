@@ -50,7 +50,8 @@ namespace Compilateur.Compilator.Business
             Declaration,
             Ref,
             Appel,
-            Fonction
+            Fonction,
+            Indirection
         }
 
         public Node()

@@ -50,7 +50,8 @@ namespace Compilateur.Compilator.Business
             UnAdd,
             Break,
             Continue,
-            Virgule
+            Virgule,
+            Indirection
         }
 
         public Token()
