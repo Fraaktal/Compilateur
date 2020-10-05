@@ -51,6 +51,7 @@ namespace Compilateur.Compilator.Business
             Break,
             Continue,
             Virgule,
+            Return,
             Indirection
         }
 

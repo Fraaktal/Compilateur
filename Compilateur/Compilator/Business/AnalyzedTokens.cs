@@ -20,7 +20,8 @@ namespace Compilateur.Compilator.Business
 
         public Token Current()
         {
-            return Tokens.ElementAt(CurrentIndex);
+            var t = Tokens.ElementAt(CurrentIndex);
+            return t;
         }
 
         public void Forward()

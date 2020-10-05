@@ -51,7 +51,8 @@ namespace Compilateur.Compilator.Business
             Ref,
             Appel,
             Fonction,
-            Indirection
+            Indirection,
+            Return
         }
 
         public Node()

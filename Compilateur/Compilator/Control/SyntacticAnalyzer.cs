@@ -48,6 +48,8 @@ namespace Compilateur.Compilator.Control
                 {
                     break;
                 }
+                Tokens.Forward();
+                
             }
 
             Tokens.Accept(Token.TokensType.ClosingParenthese);
@@ -69,6 +71,15 @@ namespace Compilateur.Compilator.Control
                 E1 = Expression(0);
                 Tokens.Accept(Token.TokensType.SemiColon);
                 N = new Node(Node.NodeType.Debug, line);
+                N.AddChild(E1);
+                return N;
+            }
+            else if (Tokens.Check(Token.TokensType.Return))
+            {
+                line = Tokens.Current().LineNumber;
+                E1 = Expression(0);
+                Tokens.Accept(Token.TokensType.SemiColon);
+                N = new Node(Node.NodeType.Return, line);
                 N.AddChild(E1);
                 return N;
             }

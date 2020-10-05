@@ -26,13 +26,13 @@ namespace Compilateur.Compilator.Business
 
         public Symbol Declarer(string ident)
         {
-            if (Pile.First().ContainsKey(ident))
+            if (Pile.Last().ContainsKey(ident))
             {
                 throw new Exception("Erreur : une variable du même nom est déja déclaré dans le bloc.");
             }
 
             Symbol s = new Symbol(ident);
-            Pile.First().Add(ident, s);
+            Pile.Last().Add(ident, s);
             return s;
 
         }

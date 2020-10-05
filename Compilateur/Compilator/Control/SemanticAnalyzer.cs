@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Compilateur.Compilator.Business;
 
 namespace Compilateur.Compilator.Control
@@ -48,6 +49,14 @@ namespace Compilateur.Compilator.Control
                     break;
                 case Node.NodeType.Ref:
                     S = SymbolTable.Acceder(N.Identificator);
+                    if(S.Type != Symbol.SymbolType.Variable)
+                    {
+                        throw new Exception();
+                    }
+                    N.Slot = S.Slot;
+                    break;
+                case Node.NodeType.Indirection:
+                    S = SymbolTable.Acceder(N.Children.First().Identificator);
                     if(S.Type != Symbol.SymbolType.Variable)
                     {
                         throw new Exception();

@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Runtime\runtime..txt" />
+    <None Remove="Runtime\runtime.c" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Runtime\runtime..txt">
+    <EmbeddedResource Include="Runtime\runtime.c">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
