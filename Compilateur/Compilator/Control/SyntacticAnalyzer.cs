@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Compilateur.Compilator.Business;
 
 namespace Compilateur.Compilator.Control

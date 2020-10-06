@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Compilateur.Compilator.Business;
 
@@ -55,13 +54,12 @@ namespace Compilateur.Compilator.Control
                     }
                     N.Slot = S.Slot;
                     break;
-                case Node.NodeType.Indirection:
-                    S = SymbolTable.Acceder(N.Children.First().Identificator);
-                    if(S.Type != Symbol.SymbolType.Variable)
+                case Node.NodeType.Affect:
+                    if (N.Children.First().Type != Node.NodeType.Ref &&
+                        N.Children.First().Type != Node.NodeType.Indirection)
                     {
                         throw new Exception();
                     }
-                    N.Slot = S.Slot;
                     break;
                 case Node.NodeType.Fonction:
                     NbSlot = 0;
