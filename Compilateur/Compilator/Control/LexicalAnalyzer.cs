@@ -140,6 +140,14 @@ namespace Compilateur.Compilator.Control
                         token.Type = Token.TokensType.ClosingAccolade;
                         index += 1;
                         break;
+                    case '[':
+                        token.Type = Token.TokensType.OpenBracket;
+                        index += 1;
+                        break;
+                    case ']':
+                        token.Type = Token.TokensType.ClosingBracket;
+                        index += 1;
+                        break;
                     case '\r':
                         if (index < Code.Length - 1 && Code.ElementAt(index + 1).Equals('\n'))
                         {
@@ -248,6 +256,9 @@ namespace Compilateur.Compilator.Control
                     break;
                 case "return":
                     token.Type = Token.TokensType.Return;
+                    break;
+                case "receive":
+                    token.Type = Token.TokensType.Receive;
                     break;
                 default:
                     token.Type = Token.TokensType.Identificator;

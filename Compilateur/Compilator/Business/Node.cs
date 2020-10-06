@@ -52,7 +52,9 @@ namespace Compilateur.Compilator.Business
             Appel,
             Fonction,
             Indirection,
-            Return
+            Return,
+            Send,
+            Receive
         }
 
         public Node()
@@ -80,14 +82,9 @@ namespace Compilateur.Compilator.Business
 
         public int SlotCount { get; set; }
 
-        public void AddChildren(List<Node> nodes)
+        public void AddChildren(params Node[] nodes)
         {
             Children.AddRange(nodes);
-        }
-
-        public void AddChild(Node node)
-        {
-            Children.Add(node);
         }
     }
 }

@@ -7,41 +7,45 @@ namespace Compilateur.Compilator.Business
 {
     static class OperatorsPriorities
     {
+        private static List<OperatorPriority> _tab;
+
         private static List<OperatorPriority> Tab
         {
             get
             {
-                List<OperatorPriority> res = new List<OperatorPriority>();
-                
-                res.Add(new OperatorPriority(Token.TokensType.Affect, 5, 5, Node.NodeType.Affect));
+                if (_tab == null)
+                {
+                    _tab = new List<OperatorPriority>();
 
-                res.Add(new OperatorPriority(Token.TokensType.Or, 10, 11, Node.NodeType.Or));
+                    _tab.Add(new OperatorPriority(Token.TokensType.Affect, 5, 5, Node.NodeType.Affect));
 
-                res.Add(new OperatorPriority(Token.TokensType.And, 20, 21, Node.NodeType.And));
+                    _tab.Add(new OperatorPriority(Token.TokensType.Or, 10, 11, Node.NodeType.Or));
 
-                res.Add(new OperatorPriority(Token.TokensType.Superior, 30, 31, Node.NodeType.Superior));
-                res.Add(new OperatorPriority(Token.TokensType.SuperiorEq, 30, 31, Node.NodeType.SuperiorEq));
-                res.Add(new OperatorPriority(Token.TokensType.Inferior, 30, 31, Node.NodeType.Inferior));
-                res.Add(new OperatorPriority(Token.TokensType.InferiorEq, 30, 31, Node.NodeType.InferiorEq));
-                res.Add(new OperatorPriority(Token.TokensType.Equals, 30, 31, Node.NodeType.Equals));
-                res.Add(new OperatorPriority(Token.TokensType.Different, 30, 31, Node.NodeType.Different));
+                    _tab.Add(new OperatorPriority(Token.TokensType.And, 20, 21, Node.NodeType.And));
+                    
+                    _tab.Add(new OperatorPriority(Token.TokensType.Superior, 30, 31, Node.NodeType.Superior));
+                    _tab.Add(new OperatorPriority(Token.TokensType.SuperiorEq, 30, 31, Node.NodeType.SuperiorEq));
+                    _tab.Add(new OperatorPriority(Token.TokensType.Inferior, 30, 31, Node.NodeType.Inferior));
+                    _tab.Add(new OperatorPriority(Token.TokensType.InferiorEq, 30, 31, Node.NodeType.InferiorEq));
+                    _tab.Add(new OperatorPriority(Token.TokensType.Equals, 30, 31, Node.NodeType.Equals));
+                    _tab.Add(new OperatorPriority(Token.TokensType.Different, 30, 31, Node.NodeType.Different));
+                    
+                    _tab.Add(new OperatorPriority(Token.TokensType.Add, 40, 41, Node.NodeType.Add));
+                    _tab.Add(new OperatorPriority(Token.TokensType.Sub, 40, 41, Node.NodeType.Sub));
+                    
+                    _tab.Add(new OperatorPriority(Token.TokensType.Mult, 50, 51, Node.NodeType.Mult));
+                    _tab.Add(new OperatorPriority(Token.TokensType.Div, 50, 51, Node.NodeType.Div));
+                    _tab.Add(new OperatorPriority(Token.TokensType.Mod, 50, 51, Node.NodeType.Mod));
+                    
+                    _tab.Add(new OperatorPriority(Token.TokensType.UnSub, 0, 55, Node.NodeType.UnSub));
+                    _tab.Add(new OperatorPriority(Token.TokensType.UnNot, 0, 55, Node.NodeType.UnNot));
+                    _tab.Add(new OperatorPriority(Token.TokensType.UnAdd, 0, 55, Node.NodeType.UnAdd));
+                    _tab.Add(new OperatorPriority(Token.TokensType.Indirection, 0, 55, Node.NodeType.Indirection));
+                    
+                    _tab.Add(new OperatorPriority(Token.TokensType.Pow, 60, 61, Node.NodeType.Pow));
+                }
 
-                res.Add(new OperatorPriority(Token.TokensType.Add,40,41,Node.NodeType.Add));
-                res.Add(new OperatorPriority(Token.TokensType.Sub,40,41,Node.NodeType.Sub));
-
-                res.Add(new OperatorPriority(Token.TokensType.Mult,50,51,Node.NodeType.Mult));
-                res.Add(new OperatorPriority(Token.TokensType.Div,50,51,Node.NodeType.Div));
-                res.Add(new OperatorPriority(Token.TokensType.Mod,50,51,Node.NodeType.Mod));
-
-                res.Add(new OperatorPriority(Token.TokensType.UnSub,0,55,Node.NodeType.UnSub));
-                res.Add(new OperatorPriority(Token.TokensType.UnNot,0,55,Node.NodeType.UnNot));
-                res.Add(new OperatorPriority(Token.TokensType.UnAdd,0,55,Node.NodeType.UnAdd));
-                res.Add(new OperatorPriority(Token.TokensType.Indirection, 0,55,Node.NodeType.Indirection));
-
-                res.Add(new OperatorPriority(Token.TokensType.Pow,60,61,Node.NodeType.Pow));
-
-
-                return res;
+                return _tab;
             }
         }
 

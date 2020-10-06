@@ -23,6 +23,19 @@ int malloc(int n){
 	return p;
 }
 
+int printSub(int n)
+{
+	int r;
+	int d;
+	r = n / 10;
+	d = n % 10;
+	if (r != 0) 
+	{
+		printSub(r);
+	}
+	send(d + 48);
+}
+
 
 int print(int n)
 {
@@ -37,23 +50,25 @@ int print(int n)
 	}
 	else
 	{
-		print_sub(n);
+		printSub(n);
 	}
 }
 
-int print_ref(int n)
+int readline()
 {
-	if(n == 0)
-	{
-		return 0;
+	int a;
+	int result;
+	result = 0;
+	a = receive;
+
+	while (a != 10) {
+		result = (result * 10) + a - 48;
+		a = receive;
 	}
-	int r;
-	int d;
-	r = n / 10;
-	d = n % 10;
-	print_ref(r);
-	send(d + 48);
+
+	return result;
 }
+
 
 
 

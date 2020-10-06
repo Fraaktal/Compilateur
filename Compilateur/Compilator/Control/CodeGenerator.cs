@@ -78,6 +78,13 @@ namespace Compilateur.Compilator.Control
                     generatedCode += GenerateCode(node.Children.First());
                     generatedCode += "ret\n";
                     break;
+                case Node.NodeType.Send:
+                    generatedCode += GenerateCode(node.Children.First());
+                    generatedCode += "send\n";
+                    break;
+                case Node.NodeType.Receive:
+                    generatedCode += "recv\n";
+                    break;
                 case Node.NodeType.Drop:
                     generatedCode += GenerateCode(node.Children.First());
                     generatedCode += "drop\n";
@@ -86,17 +93,18 @@ namespace Compilateur.Compilator.Control
                     generatedCode += $"get {node.Slot}\n";
                     break;
                 case Node.NodeType.Affect:
-                    generatedCode += GenerateCode(node.Children[1]);
                     if (node.Children.First().Type == Node.NodeType.Ref)
                     {
+                        generatedCode += GenerateCode(node.Children[1]);
                         generatedCode += $"dup\nset {node.Children[0].Slot}\n";
                     }
                     else
                     {
-                        generatedCode += GenerateCode(node.Children.First());
+                        generatedCode += GenerateCode(node.Children[1]);
+                        generatedCode += GenerateCode(node.Children.First().Children.First());
                         generatedCode += $"write\n";
+                        generatedCode += $"push 0\n";
                     }
-                    
                     break;
                 case Node.NodeType.Indirection:
                     generatedCode += GenerateCode(node.Children.First());

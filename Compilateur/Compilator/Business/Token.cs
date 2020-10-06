@@ -52,7 +52,10 @@ namespace Compilateur.Compilator.Business
             Continue,
             Virgule,
             Return,
-            Indirection
+            Indirection,
+            OpenBracket,
+            ClosingBracket,
+            Receive
         }
 
         public Token()

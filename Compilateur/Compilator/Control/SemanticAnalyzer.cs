@@ -60,6 +60,12 @@ namespace Compilateur.Compilator.Control
                     {
                         throw new Exception();
                     }
+
+                    foreach (var child in N.Children)
+                    {
+                        Analyze(child);
+                    }
+
                     break;
                 case Node.NodeType.Fonction:
                     NbSlot = 0;

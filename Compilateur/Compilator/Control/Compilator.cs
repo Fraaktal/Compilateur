@@ -37,7 +37,12 @@ namespace Compilateur.Compilator.Control
             SemanticAnalyzer = new SemanticAnalyzer();
             CodeGenerator = new CodeGenerator();
 
-            string generatedCode = GenerateCode(code, runtime);
+            SemanticAnalyzer.SymbolTable.DebutBloc();
+
+            string generatedCode = GenerateCode(runtime);
+            generatedCode += GenerateCode(code);
+
+            SemanticAnalyzer.SymbolTable.FinBloc();
 
             generatedCode += ".start\n";
             generatedCode += "prep init\ncall 0\n";
@@ -52,7 +57,7 @@ namespace Compilateur.Compilator.Control
             File.WriteAllText(resPath, generatedCode);
         }
 
-        private string GenerateCode(string runtime, string code)
+        private string GenerateCode(string code)
         {
             // On effectue l'analyse lexicale
             LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(code);
@@ -60,14 +65,12 @@ namespace Compilateur.Compilator.Control
             SyntacticAnalyzer syntacticAnalyzer = new SyntacticAnalyzer(analyzedTokens);
             
             string generatedCode = "";
-            SemanticAnalyzer.SymbolTable.DebutBloc();
             while (syntacticAnalyzer.Tokens.Current().Type != Token.TokensType.EOF)
             {
                 var tree = syntacticAnalyzer.Analyze();
                 SemanticAnalyzer.AnalyzeTree(tree);
                 generatedCode += CodeGenerator.GenerateCode(tree);
             }
-            SemanticAnalyzer.SymbolTable.FinBloc();
 
             return generatedCode;
         }
