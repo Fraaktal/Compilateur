@@ -100,8 +100,8 @@ namespace Compilateur.Compilator.Control
                     }
                     else
                     {
-                        generatedCode += GenerateCode(node.Children[1]);
                         generatedCode += GenerateCode(node.Children.First().Children.First());
+                        generatedCode += GenerateCode(node.Children[1]);
                         generatedCode += $"write\n";
                         generatedCode += $"push 0\n";
                     }

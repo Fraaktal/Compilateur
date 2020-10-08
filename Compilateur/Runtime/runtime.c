@@ -52,6 +52,7 @@ int print(int n)
 	{
 		printSub(n);
 	}
+	send(10);
 }
 
 int readline()

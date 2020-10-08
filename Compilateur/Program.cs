@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Compilateur
 {
@@ -13,7 +14,17 @@ namespace Compilateur
 
             try
             {
-                compilator.Compile(path);
+                string code = compilator.Compile(path);
+
+                Console.WriteLine("Entrer le chemin de sortie du fichier compilé : \n");
+                string outF = Console.ReadLine();
+
+                if (File.Exists(outF))
+                {
+                    File.Delete(outF);
+                }
+
+                File.WriteAllText(outF, code);
             }
             catch (Exception e)
             {

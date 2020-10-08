@@ -10,7 +10,7 @@ namespace Compilateur.Compilator.Control
         public SemanticAnalyzer SemanticAnalyzer { get; set; }
         public CodeGenerator CodeGenerator { get; set; }
 
-        public void Compile(string path)
+        public string Compile(string path)
         {
             // On lis le fichier
             FileInfo fi = new FileInfo(path);
@@ -49,12 +49,7 @@ namespace Compilateur.Compilator.Control
             generatedCode += "prep main\ncall 0\n";
             generatedCode += "halt\n";
 
-            string resPath = fi.DirectoryName + @"\generatedCode.code";
-            if (File.Exists(resPath))
-            {
-                File.Delete(resPath);
-            }
-            File.WriteAllText(resPath, generatedCode);
+            return generatedCode;
         }
 
         private string GenerateCode(string code)

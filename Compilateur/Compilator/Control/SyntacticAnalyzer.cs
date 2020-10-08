@@ -251,7 +251,7 @@ namespace Compilateur.Compilator.Control
                     while (Tokens.Current().Type != Token.TokensType.ClosingParenthese)
                     {
                         n.AddChildren(Expression(0));
-                        if (Tokens.Check(Token.TokensType.Virgule))
+                        if (!Tokens.Check(Token.TokensType.Virgule))
                         {
                             break;
                         }
