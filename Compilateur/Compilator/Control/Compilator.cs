@@ -10,7 +10,7 @@ namespace Compilateur.Compilator.Control
         public SemanticAnalyzer SemanticAnalyzer { get; set; }
         public CodeGenerator CodeGenerator { get; set; }
 
-        public string Compile(string path)
+        public string DoCompile(string path)
         {
             // On lis le fichier
             FileInfo fi = new FileInfo(path);
@@ -24,6 +24,11 @@ namespace Compilateur.Compilator.Control
                 throw new Exception($"Erreur chemin incorrect ou fichier inaccessible : {e.Message}");
             }
 
+            return Compile(code);
+        }
+
+        public string Compile(string content)
+        {
             var assembly = Assembly.GetExecutingAssembly();
             var resourceName = "Compilateur.Runtime.runtime.c";
             string runtime = "";
@@ -34,13 +39,14 @@ namespace Compilateur.Compilator.Control
                     runtime = reader.ReadToEnd();
                 }
             }
+
             SemanticAnalyzer = new SemanticAnalyzer();
             CodeGenerator = new CodeGenerator();
 
             SemanticAnalyzer.SymbolTable.DebutBloc();
 
             string generatedCode = GenerateCode(runtime);
-            generatedCode += GenerateCode(code);
+            generatedCode += GenerateCode(content);
 
             SemanticAnalyzer.SymbolTable.FinBloc();
 

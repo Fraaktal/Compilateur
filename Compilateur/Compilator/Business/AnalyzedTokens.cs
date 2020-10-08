@@ -16,7 +16,7 @@ namespace Compilateur.Compilator.Business
 
         private int CurrentIndex { get; set; }
 
-        private List<Token> Tokens { get; set; }
+        public List<Token> Tokens { get; set; }
 
         public Token Current()
         {

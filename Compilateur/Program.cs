@@ -14,7 +14,7 @@ namespace Compilateur
 
             try
             {
-                string code = compilator.Compile(path);
+                string code = compilator.DoCompile(path);
 
                 Console.WriteLine("Entrer le chemin de sortie du fichier compilé : \n");
                 string outF = Console.ReadLine();
