@@ -47,8 +47,9 @@ namespace Compilateur.Tests.Tests
         {
             Compilator.Control.Compilator compilator = new Compilator.Control.Compilator();
             string code = compilator.Compile(FileContent);
-
-            string res = TestUtils.CallMachine(code);
+            TestUtils.SaveCodeToTmp(code);
+            string res = TestUtils.CallMachine();
+            Assert.AreEqual("3\r\n", res);
         }
     }
 }

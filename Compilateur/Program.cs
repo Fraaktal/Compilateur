@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Compilateur.Tests;
 
 namespace Compilateur
 {
@@ -7,29 +8,31 @@ namespace Compilateur
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Entrer le chemin du fichier : \n");
-            string path = Console.ReadLine();
+            TestUtils.CallMachine();
 
-            Compilator.Control.Compilator compilator = new Compilator.Control.Compilator();
+            //Console.WriteLine("Entrer le chemin du fichier : \n");
+            //string path = Console.ReadLine();
 
-            try
-            {
-                string code = compilator.DoCompile(path);
+            //Compilator.Control.Compilator compilator = new Compilator.Control.Compilator();
 
-                Console.WriteLine("Entrer le chemin de sortie du fichier compilé : \n");
-                string outF = Console.ReadLine();
+            //try
+            //{
+            //    string code = compilator.DoCompile(path);
 
-                if (File.Exists(outF))
-                {
-                    File.Delete(outF);
-                }
+            //    Console.WriteLine("Entrer le chemin de sortie du fichier compilé : \n");
+            //    string outF = Console.ReadLine();
 
-                File.WriteAllText(outF, code);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Erreur lors de la compilation : " + e.Message);
-            }
+            //    if (File.Exists(outF))
+            //    {
+            //        File.Delete(outF);
+            //    }
+
+            //    File.WriteAllText(outF, code);
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine("Erreur lors de la compilation : " + e.Message);
+            //}
         }
     }
 }
