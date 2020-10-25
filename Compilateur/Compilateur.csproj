@@ -8,14 +8,14 @@
 
   <ItemGroup>
     <None Remove="Runtime\runtime.c" />
-    <None Remove="Tests\Fichiers\TestLexicalAnalyzer.c" />
+    <None Remove="Tests\Fichiers\TestCompilator.c" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Runtime\runtime.c">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tests\Fichiers\TestLexicalAnalyzer.c">
+    <EmbeddedResource Include="Tests\Fichiers\TestCompilator.c">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
