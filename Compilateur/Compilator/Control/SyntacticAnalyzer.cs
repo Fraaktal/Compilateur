@@ -82,6 +82,15 @@ namespace Compilateur.Compilator.Control
                 N.AddChildren(E1);
                 return N;
             }
+            else if (Tokens.Check(Token.TokensType.Send))
+            {
+                line = Tokens.Current().LineNumber;
+                E1 = Expression(0);
+                Tokens.Accept(Token.TokensType.SemiColon);
+                N = new Node(Node.NodeType.Send, line);
+                N.AddChildren(E1);
+                return N;
+            }
             else if (Tokens.Check(Token.TokensType.OpenAccolade))
             {
                 line = Tokens.Current().LineNumber;
@@ -237,16 +246,7 @@ namespace Compilateur.Compilator.Control
                 Tokens.Forward();
                 if (Tokens.Check(Token.TokensType.OpenParenthese))
                 {
-                    Node n;
-                    if (T.StringValue == "send")
-                    {
-                        n = new Node(Node.NodeType.Send, T.LineNumber);
-                    }
-                    else
-                    {
-                        n = new Node(Node.NodeType.Appel, T.LineNumber);
-                    }
-
+                    Node n = new Node(Node.NodeType.Appel, T.LineNumber);
                     n.Identificator = T.StringValue;
                     while (Tokens.Current().Type != Token.TokensType.ClosingParenthese)
                     {

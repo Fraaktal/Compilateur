@@ -260,6 +260,9 @@ namespace Compilateur.Compilator.Control
                 case "receive":
                     token.Type = Token.TokensType.Receive;
                     break;
+                case "send":
+                    token.Type = Token.TokensType.Send;
+                    break;
                 default:
                     token.Type = Token.TokensType.Identificator;
                     token.StringValue = val;

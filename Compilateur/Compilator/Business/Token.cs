@@ -55,7 +55,8 @@ namespace Compilateur.Compilator.Business
             Indirection,
             OpenBracket,
             ClosingBracket,
-            Receive
+            Receive,
+            Send
         }
 
         public Token()

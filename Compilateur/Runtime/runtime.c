@@ -33,7 +33,7 @@ int printSub(int n)
 	{
 		printSub(r);
 	}
-	send(d + 48);
+	send d + 48;
 }
 
 
@@ -41,18 +41,18 @@ int print(int n)
 {
 	if(n<0)
 	{
-		send(45);
-		n = -n;
+		send 45;
+		printSub(-n);
 	}
 	if(n == 0)
 	{
-		send(48);
+		send 48;
 	}
 	else
 	{
 		printSub(n);
 	}
-	send(10);
+	send 10;
 }
 
 int readline()
@@ -69,8 +69,3 @@ int readline()
 
 	return result;
 }
-
-
-
-
-
