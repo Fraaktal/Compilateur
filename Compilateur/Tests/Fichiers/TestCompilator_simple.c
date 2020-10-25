@@ -18,8 +18,19 @@ int testAddition()
 int testSoustraction()
 {
 	int a;
-	a = 1 - 2;
-	print(a); 
+	a = 3 - 2;
+	print(a); // 1
+	
+	a = 2 - 3;
+	print(a); // -1
+	
+	int b; int c;
+	b = 3; c = 2;
+	a = b - c;
+	print(a); // 1
+
+	a = c - b;
+	print(a); // -1
 }
 
 int testMultiplication()
@@ -34,7 +45,6 @@ int testDivision()
 
 
 int main() {
-	testPrint();
 	testAddition();
 	testSoustraction();
 	testMultiplication();

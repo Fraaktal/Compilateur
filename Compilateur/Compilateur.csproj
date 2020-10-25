@@ -9,7 +9,7 @@
   <ItemGroup>
     <None Remove="Runtime\runtime.c" />
     <None Remove="Tests\Fichiers\TestCompilator.c" />
-    <None Remove="Tests\Fichiers\TestCompilator_Print_Read.c" />
+    <None Remove="Tests\Fichiers\TestCompilator_Print.c" />
     <None Remove="Tests\Fichiers\TestCompilator_simple.c" />
   </ItemGroup>
 
@@ -17,7 +17,7 @@
     <EmbeddedResource Include="Runtime\runtime.c">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tests\Fichiers\TestCompilator_Print_Read.c">
+    <EmbeddedResource Include="Tests\Fichiers\TestCompilator_Print.c">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Tests\Fichiers\TestCompilator_simple.c">

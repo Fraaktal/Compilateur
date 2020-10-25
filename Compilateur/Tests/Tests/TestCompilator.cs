@@ -52,7 +52,7 @@ namespace Compilateur.Tests.Tests
             get
             {
                 var assembly = Assembly.GetExecutingAssembly();
-                var resourceName = "Compilateur.Tests.Fichiers.TestCompilator_Print_Read.c";
+                var resourceName = "Compilateur.Tests.Fichiers.TestCompilator_Print.c";
                 string file = "";
                 using (Stream stream = assembly.GetManifestResourceStream(resourceName))
                 {
@@ -109,6 +109,10 @@ namespace Compilateur.Tests.Tests
             Assert.AreEqual("4", results[0]);
             Assert.AreEqual($"-2", results[1]);
             Assert.AreEqual($"-4", results[2]);
+            Assert.AreEqual($"1", results[3]);
+            Assert.AreEqual($"-1", results[4]);
+            Assert.AreEqual($"1", results[5]);
+            Assert.AreEqual($"-1", results[6]);
 
         }
         

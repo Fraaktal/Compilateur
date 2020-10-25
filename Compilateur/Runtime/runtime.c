@@ -42,7 +42,7 @@ int print(int n)
 	if(n<0)
 	{
 		send 45;
-		printSub(-n);
+		n = -n;
 	}
 	if(n == 0)
 	{
@@ -52,6 +52,7 @@ int print(int n)
 	{
 		printSub(n);
 	}
+	
 	send 10;
 }
 
