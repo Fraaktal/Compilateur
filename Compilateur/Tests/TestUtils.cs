@@ -23,7 +23,9 @@ namespace Compilateur.Tests
         {
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = "E:\\Polytech\\APP4\\Compilation\\msm.exe";
+            string path = Directory.GetCurrentDirectory() + @"\Machine\msm.exe";
+            
+            startInfo.FileName = path;
             startInfo.Arguments = TmpPath;
             startInfo.RedirectStandardOutput = true;
             process.StartInfo = startInfo;
