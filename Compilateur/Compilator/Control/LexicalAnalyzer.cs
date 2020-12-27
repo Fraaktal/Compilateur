@@ -9,14 +9,12 @@ namespace Compilateur.Compilator.Control
     {
         public LexicalAnalyzer(string code)
         {
-            Regex regex = new Regex(@"\t|(\/\/(.*)(?=\r\n))"); //lookahead pas forcément utile. todo
+            Regex regex = new Regex(@"\t|(\/\/(.*)(?=\r\n))"); //lookahead pas forcément utile.
             code = regex.Replace(code, ""); //supprime les commentaires (pas supprimer les espaces !)
             Code = code;
         }
 
         public string Code { get; set; }
-
-        //TODO mot commencant par if else,...
 
         public AnalyzedTokens AnalyzeCode()
         {
@@ -169,32 +167,6 @@ namespace Compilateur.Compilator.Control
             return new AnalyzedTokens(tokens);
         }
 
-
-        //public AnalyzedTokens AnalyzeCodeN()
-        //{
-        //    List<Token> tokens = new List<Token>();
-
-        //    int index = 0;
-        //    int line = 1;
-
-        //    while (index < Code.Length)
-        //    {
-        //        char c = Code.ElementAt(index);
-        //        Token token = new Token();
-
-        //        token.Type = HandleChar(c, ref index);
-
-        //        tokens.Add(token);
-        //    }
-
-        //    return new AnalyzedTokens(tokens);
-        //}
-
-        private Token.TokensType HandleChar(in char c, ref int index)
-        {
-            return Token.TokensType.Add;
-        }
-
         private Token HandleConst(ref int index)
         {
             char c = Code.ElementAt(index);
@@ -268,8 +240,7 @@ namespace Compilateur.Compilator.Control
                     token.StringValue = val;
                     break;
             }
-
-
+            
             return token;
         }
 

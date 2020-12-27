@@ -50,7 +50,7 @@ namespace Compilateur.Compilator.Control
                     S = SymbolTable.Acceder(N.Identificator);
                     if(S.Type != Symbol.SymbolType.Variable)
                     {
-                        throw new Exception();
+                        throw new Exception($"Erreur, noeud incohérent : {N.Children.First().Type.ToString()}. Attendu : noeud variable");
                     }
                     N.Slot = S.Slot;
                     break;
@@ -58,7 +58,7 @@ namespace Compilateur.Compilator.Control
                     if (N.Children.First().Type != Node.NodeType.Ref &&
                         N.Children.First().Type != Node.NodeType.Indirection)
                     {
-                        throw new Exception();
+                        throw new Exception($"Erreur, noeud incohérent : {N.Children.First().Type.ToString()}. Attendu : noeud référence ou indirection");
                     }
 
                     foreach (var child in N.Children)
@@ -83,7 +83,7 @@ namespace Compilateur.Compilator.Control
                     S = SymbolTable.Acceder(N.Identificator);
                     if (S.Type != Symbol.SymbolType.Function)
                     {
-                        throw new Exception();
+                        throw new Exception($"Erreur, noeud incohérent : {N.Children.First().Type.ToString()}. Attendu : noeud fonction");
                     }
 
                     foreach (var child in N.Children)

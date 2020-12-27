@@ -132,7 +132,7 @@ namespace Compilateur.Compilator.Control
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new Exception($"Erreur - Token inattendu trouvé : {Tokens.Current().Type} ligne : {Tokens.Current().LineNumber}");
                 }
 
             }
@@ -269,7 +269,7 @@ namespace Compilateur.Compilator.Control
             }
             else
             {
-                throw new Exception($"Erreur - Token inattendu Trouvé : {Tokens.Current().Type} ligne : {Tokens.Current().LineNumber}");
+                throw new Exception($"Erreur - Token inattendu trouvé : {Tokens.Current().Type} ligne : {Tokens.Current().LineNumber}");
             }
         }
 

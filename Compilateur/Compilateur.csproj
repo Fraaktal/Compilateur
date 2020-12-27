@@ -10,11 +10,15 @@
     <None Remove="Runtime\runtime.c" />
     <None Remove="Tests\Fichiers\TestCompilator_BasicOperator.c" />
     <None Remove="Tests\Fichiers\TestCompilator_ConditionalLoopRecurcive.c" />
+    <None Remove="Tests\Fichiers\TestCompilator_PointerArray.c" />
     <None Remove="Tests\Fichiers\TestCompilator_Print.c" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Runtime\runtime.c">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tests\Fichiers\TestCompilator_PointerArray.c">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Tests\Fichiers\TestCompilator_Print.c">

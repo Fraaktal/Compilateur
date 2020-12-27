@@ -112,6 +112,25 @@ namespace Compilateur.Tests.Tests
 
         }
 
+        [Test]
+        public void TestCompilator_PointerArray()
+        {
+            Compilator.Control.Compilator compilator = new Compilator.Control.Compilator();
+            string code = compilator.Compile(GetCodeFromFileName("TestCompilator_PointerArray"));
+            TestUtils.SaveCodeToTmp(code);
+            string res = TestUtils.CallMachine();
+            string[] results = res.Split("\r\n", StringSplitOptions.RemoveEmptyEntries);
+
+            //Test Pointer
+            Assert.AreEqual($"6", results[0]);
+
+            //Test array
+            Assert.AreEqual("1", results[1]);
+            Assert.AreEqual($"2", results[2]);
+            Assert.AreEqual($"3", results[3]);
+
+        }
+
         public string GetCodeFromFileName(string fileName)
         {
             var assembly = Assembly.GetExecutingAssembly();
