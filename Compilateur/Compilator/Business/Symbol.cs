@@ -1,5 +1,4 @@
-﻿using System;
-namespace Compilateur.Compilator.Business
+﻿namespace Compilateur.Compilator.Business
 {
     public class Symbol
     {

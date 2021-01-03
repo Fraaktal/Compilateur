@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Compilateur.Compilator.Business
+﻿namespace Compilateur.Compilator.Business
 {
     public class OperatorPriority
     {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Compilateur.Compilator.Business;
 
 namespace Compilateur.Compilator.Control
@@ -266,6 +265,18 @@ namespace Compilateur.Compilator.Control
                     n.Identificator = T.StringValue;
                     return n;
                 }
+            }
+            else if (Tokens.Current().Type == Token.TokensType.Break)
+            {
+                Node n = new Node(Node.NodeType.Break, Tokens.Current().LineNumber);
+                Tokens.Forward();
+                return n;
+            }
+            else if (Tokens.Current().Type == Token.TokensType.Continue)
+            {
+                Node n = new Node(Node.NodeType.Continue, Tokens.Current().LineNumber);
+                Tokens.Forward();
+                return n;
             }
             else
             {

@@ -110,6 +110,12 @@ namespace Compilateur.Tests.Tests
             //Test Recurcif => Fibonacci
             Assert.AreEqual($"610", results[5]);
 
+            //Test break
+            Assert.AreEqual($"1", results[6]);
+
+            //Test continue
+            Assert.AreEqual($"1", results[7]);
+
         }
 
         [Test]

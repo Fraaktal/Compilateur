@@ -46,6 +46,50 @@ int testRecurcif(int i) {
 
 }
 
+int testBreak()
+{
+	int a; a = 4;
+	while(a < 10)
+	{
+		a = a + 1;
+		if(a == 6)
+		{
+			break;
+		}
+	}
+
+	if(a == 6)
+	{
+		return 1;
+	}
+
+	return 0;
+}
+
+int testContinue()
+{
+	int a; a = 4;
+	int b;b = 0;
+	while (a < 10)
+	{
+		a = a + 1;
+		
+		if(b == 0)
+		{
+			continue;
+		}
+
+		b = 1;
+	}
+
+	if (b == 0)
+	{
+		return 1;
+	}
+
+	return 0;
+}
+
 int main() {
 	print(testIf(1,1)); // -1
 	print(testIf(2,1)); // 2
@@ -56,5 +100,8 @@ int main() {
 	print(testFor(10)); // 10
 	
 	print(testRecurcif(15)); // 610
+	
+	print(testBreak()); // 1
+	print(testContinue()); // 1
 
 }
