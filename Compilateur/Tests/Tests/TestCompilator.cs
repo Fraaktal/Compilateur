@@ -85,6 +85,13 @@ namespace Compilateur.Tests.Tests
             Assert.AreEqual($"-1", results[21]);
             Assert.AreEqual($"1", results[22]);
             Assert.AreEqual($"1", results[23]);
+            
+            //Pow
+            Assert.AreEqual($"8", results[24]);
+            Assert.AreEqual($"-8", results[25]);
+            Assert.AreEqual($"0", results[26]);
+            Assert.AreEqual($"8", results[27]);
+            Assert.AreEqual($"8", results[28]);
         }
 
         [Test]

@@ -2,12 +2,20 @@ int init() {
 	return 0;
 }
 
-int pow(int a, int b){
+int puissance(int a, int b){
 	int r;
 	r = 1;
+	int neg; neg = 0;
+	if (b < 0) {
+		b = -b;
+		neg = 1;
+	}
 	while(b!=0){
 		r = r * a;
 		b = b - 1;
+	}
+	if (neg == 1) {
+		r = 1 / r;
 	}
 	return r;
 }

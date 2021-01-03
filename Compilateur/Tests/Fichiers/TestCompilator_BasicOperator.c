@@ -74,6 +74,19 @@ int testModulo()
 	print(c); // 1
 }
 
+int testPow()
+{
+	int a; a = 2;
+	int b; b = 3;
+	print(a ^ b); // 8
+	print(-a ^ b); // -8
+	print(-a ^ -b); // 0
+	print(2 ^ 3); // 8
+	int c;
+	c = a ^ b;
+	print(c); // 8
+}
+
 
 int main() {
 	testAddition();
@@ -81,4 +94,5 @@ int main() {
 	testMultiplication();
 	testDivision();
 	testModulo();
+	testPow();
 }

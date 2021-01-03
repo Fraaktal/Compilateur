@@ -90,6 +90,20 @@ namespace Compilateur.Compilator.Control
                 N.AddChildren(E1);
                 return N;
             }
+            else if (Tokens.Check(Token.TokensType.Break))
+            {
+                line = Tokens.Current().LineNumber;
+                Tokens.Accept(Token.TokensType.SemiColon);
+                N = new Node(Node.NodeType.Break, line);
+                return N;
+            }
+            else if (Tokens.Check(Token.TokensType.Continue))
+            {
+                line = Tokens.Current().LineNumber;
+                Tokens.Accept(Token.TokensType.SemiColon);
+                N = new Node(Node.NodeType.Continue, line);
+                return N;
+            }
             else if (Tokens.Check(Token.TokensType.OpenAccolade))
             {
                 line = Tokens.Current().LineNumber;
@@ -265,18 +279,6 @@ namespace Compilateur.Compilator.Control
                     n.Identificator = T.StringValue;
                     return n;
                 }
-            }
-            else if (Tokens.Current().Type == Token.TokensType.Break)
-            {
-                Node n = new Node(Node.NodeType.Break, Tokens.Current().LineNumber);
-                Tokens.Forward();
-                return n;
-            }
-            else if (Tokens.Current().Type == Token.TokensType.Continue)
-            {
-                Node n = new Node(Node.NodeType.Continue, Tokens.Current().LineNumber);
-                Tokens.Forward();
-                return n;
             }
             else
             {

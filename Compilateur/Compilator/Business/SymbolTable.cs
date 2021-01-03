@@ -28,7 +28,9 @@ namespace Compilateur.Compilator.Business
         {
             if (Pile.Last().ContainsKey(ident))
             {
-                throw new Exception("Erreur : une variable du même nom est déja déclaré dans le bloc.");
+                var symbol = Pile.Last()[ident];
+                string type = symbol.Type == Symbol.SymbolType.Function ? "fonction" : "variable";
+                throw new Exception($"Erreur : une {type} de même nom est déja déclarée dans le bloc.");
             }
 
             Symbol s = new Symbol(ident);
